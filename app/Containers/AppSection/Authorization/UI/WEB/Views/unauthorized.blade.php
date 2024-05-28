@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>Apiato</title>
     <style>
@@ -31,13 +32,15 @@
         }
     </style>
 </head>
+
 <body>
 
-<div class="unauthorized-page">
-    <h1 class="center">Access Denied</h1>
-    <p class="center">You are not authorized to access this page.</p>
-    <div class="center"><a href="/">Home</a></div>
-</div>
+    <div class="unauthorized-page">
+        <h1 class="center">Access Denied</h1>
+        <p class="center">You are not authorized to access this page.</p>
+        <div class="center"><a href="/">Home</a></div>
+    </div>
 
 </body>
+
 </html>

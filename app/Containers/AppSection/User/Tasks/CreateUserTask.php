@@ -21,8 +21,8 @@ class CreateUserTask extends ParentTask
     {
         try {
             $user = $this->repository->create($data);
-        } catch (\Exception) {
-            throw new CreateResourceFailedException();
+        } catch (\Exception $e) {
+            throw new CreateResourceFailedException($e->getMessage());
         }
 
         return $user;

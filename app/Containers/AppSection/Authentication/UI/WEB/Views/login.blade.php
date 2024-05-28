@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>Apiato</title>
     <style>
@@ -49,7 +50,9 @@
             cursor: pointer;
         }
 
-        .form button:hover, .form button:active, .form button:focus {
+        .form button:hover,
+        .form button:active,
+        .form button:focus {
             background: #43A047;
         }
 
@@ -97,25 +100,27 @@
         }
     </style>
 </head>
+
 <body>
 
-<div class="login-page">
-    <h1 class="center">Login</h1>
-    <form class="form" action="{{ route('login') }}" method="post">
-        @csrf
-        @if(session('login'))
+    <div class="login-page">
+        <h1 class="center">Login</h1>
+        <form class="form" action="{{ route('login') }}" method="post">
+            @csrf
+            @if(session('login'))
             <div class="text-red">{{ session('login') }}</div>
-        @endif
-        <label class="hide" for="email">Email</label>
-        <input type="text" placeholder="email" id="email" name="email"/>
-        <span class="text-red">{{ $errors->first('email') }}</span>
-        <label class="hide" for="password">Password</label>
-        <input type="password" placeholder="password" id="password" name="password"/>
-        <span class="text-red">{{ $errors->first('password') }}</span>
+            @endif
+            <label class="hide" for="name">Usuario</label>
+            <input type="text" placeholder="Usuario" id="name" name="name" />
+            <span class="text-red">{{ $errors->first('name') }}</span>
+            <label class="hide" for="password">Password</label>
+            <input type="password" placeholder="password" id="password" name="password" />
+            <span class="text-red">{{ $errors->first('password') }}</span>
 
-        <button>login</button>
-    </form>
-</div>
+            <button>login</button>
+        </form>
+    </div>
 
 </body>
+
 </html>

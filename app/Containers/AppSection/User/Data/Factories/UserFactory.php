@@ -2,6 +2,7 @@
 
 namespace App\Containers\AppSection\User\Data\Factories;
 
+use App\Containers\AppSection\Establecimiento\Models\Establecimiento;
 use App\Containers\AppSection\User\Enums\Gender;
 use App\Containers\AppSection\User\Models\User;
 use App\Ship\Parents\Factories\Factory as ParentFactory;
@@ -20,13 +21,11 @@ class UserFactory extends ParentFactory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->name(),
-            'email' => $this->faker->unique()->safeEmail(),
+            'name' => $this->faker->userName(),
+            'nombre_completo' => $this->faker->name() . ' ' . $this->faker->lastName(),
+            'cargo' => $this->faker->jobTitle(),
             'password' => 'password',
-            'email_verified_at' => now(),
-            'remember_token' => Str::random(10),
-            'gender' => $this->faker->randomElement(['male', 'female', 'unspecified']),
-            'birth' => $this->faker->date(),
+            'establecimiento_id' => Establecimiento::inRandomOrder()->value('id'),
         ];
     }
 

@@ -40,6 +40,31 @@
       0 => 'Barryvdh\\LaravelIdeHelper\\IdeHelperServiceProvider',
     ),
   ),
+  'blade-ui-kit/blade-heroicons' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'BladeUI\\Heroicons\\BladeHeroiconsServiceProvider',
+    ),
+  ),
+  'blade-ui-kit/blade-icons' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'BladeUI\\Icons\\BladeIconsServiceProvider',
+    ),
+  ),
+  'joserick/laravel-livewire-discover' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Joserick\\LaravelLivewireDiscover\\LaravelLivewireDiscoverServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'LaravelLivewireDiscover' => 'Joserick\\LaravelLivewireDiscover\\Facades\\LaravelLivewireDiscover',
+    ),
+  ),
   'laravel/passport' => 
   array (
     'providers' => 
@@ -52,6 +77,17 @@
     'providers' => 
     array (
       0 => 'Laravel\\Tinker\\TinkerServiceProvider',
+    ),
+  ),
+  'livewire/livewire' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Livewire\\LivewireServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Livewire' => 'Livewire\\Livewire',
     ),
   ),
   'nesbot/carbon' => 
@@ -82,6 +118,31 @@
       0 => 'Prettus\\Repository\\Providers\\RepositoryServiceProvider',
     ),
   ),
+  'robsontenorio/mary' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Mary\\MaryServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Mary' => 'Mary\\Facades\\Mary',
+    ),
+  ),
+  'ryangjchandler/blade-tabler-icons' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'RyanChandler\\TablerIcons\\BladeTablerIconsServiceProvider',
+    ),
+  ),
+  'shakilnadim/treefy' => 
+  array (
+    'aliases' => 
+    array (
+      'Treefy' => 'ShakilNadim\\Treefy\\Treefy',
+    ),
+  ),
   'spatie/laravel-fractal' => 
   array (
     'providers' => 
@@ -109,6 +170,20 @@
     'providers' => 
     array (
       0 => 'Spatie\\Permission\\PermissionServiceProvider',
+    ),
+  ),
+  'staudenmeir/laravel-adjacency-list' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Staudenmeir\\LaravelAdjacencyList\\IdeHelperServiceProvider',
+    ),
+  ),
+  'staudenmeir/laravel-cte' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Staudenmeir\\LaravelCte\\DatabaseServiceProvider',
     ),
   ),
   'vinkla/hashids' => 

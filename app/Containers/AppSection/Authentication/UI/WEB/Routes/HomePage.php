@@ -1,7 +1,7 @@
 <?php
 
-use App\Containers\AppSection\Authentication\UI\WEB\Controllers\HomePageController;
+use App\Ship\Components\Dashboard;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', HomePageController::class)
-    ->name('home-page');
+Route::get('/', Dashboard::class)
+    ->name('home-page')->middleware('auth');

@@ -16,9 +16,11 @@ class AuthorizationDefaultUsersSeeder_4 extends ParentSeeder
     {
         // Default Users (with their roles) ---------------------------------------------
         $userData = [
-            'email' => 'admin@admin.com',
-            'password' => config('appSection-authorization.admin_role'),
-            'name' => 'Super Admin',
+            'establecimiento_id' => 1,
+            'password' => 'admin',
+            'name' => 'admin',
+            'nombre_completo' => 'Gilbert Gil Gutierrez Luyo',
+            'cargo' => 'Ingeniero de Sistemas',
         ];
 
         $action->run($userData);
