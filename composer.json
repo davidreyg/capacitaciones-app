@@ -49,7 +49,6 @@
         "livewire/livewire": "^3.5",
         "robsontenorio/mary": "^1.31",
         "ryangjchandler/blade-tabler-icons": "^2.3",
-        "shakilnadim/treefy": "^1.0",
         "staudenmeir/laravel-adjacency-list": "^1.0",
         "webmozart/assert": "^1.11",
         "wikimedia/composer-merge-plugin": "^2.1"

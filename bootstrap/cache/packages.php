@@ -136,13 +136,6 @@
       0 => 'RyanChandler\\TablerIcons\\BladeTablerIconsServiceProvider',
     ),
   ),
-  'shakilnadim/treefy' => 
-  array (
-    'aliases' => 
-    array (
-      'Treefy' => 'ShakilNadim\\Treefy\\Treefy',
-    ),
-  ),
   'spatie/laravel-fractal' => 
   array (
     'providers' => 

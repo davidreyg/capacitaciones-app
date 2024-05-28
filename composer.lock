@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "897d37117bd6912ced2f064c431af2cb",
+    "content-hash": "7e8cf61ee952a5ae1af1312e988de947",
     "packages": [
         {
             "name": "apiato/container-installer",
@@ -5266,53 +5266,6 @@
                 "source": "https://github.com/ryangjchandler/blade-tabler-icons/tree/v2.3.0"
             },
             "time": "2024-03-12T23:54:24+00:00"
-        },
-        {
-            "name": "shakilnadim/treefy",
-            "version": "1.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/shakilnadim/treefy.git",
-                "reference": "40ca2e632ed02b3b4747484c5ca3fe359f855cfd"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/shakilnadim/treefy/zipball/40ca2e632ed02b3b4747484c5ca3fe359f855cfd",
-                "reference": "40ca2e632ed02b3b4747484c5ca3fe359f855cfd",
-                "shasum": ""
-            },
-            "require": {
-                "laravel/framework": "*"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "aliases": {
-                        "Treefy": "ShakilNadim\\Treefy\\Treefy"
-                    }
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "ShakilNadim\\Treefy\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Nadim Shakil",
-                    "email": "shakilnadim@gmail.com"
-                }
-            ],
-            "description": "It is a laravel package to convert an array of self related data to an array of trees based on the relation.",
-            "support": {
-                "issues": "https://github.com/shakilnadim/treefy/issues",
-                "source": "https://github.com/shakilnadim/treefy/tree/1.0.3"
-            },
-            "time": "2021-04-16T15:28:40+00:00"
         },
         {
             "name": "spatie/fractalistic",
