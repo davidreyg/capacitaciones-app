@@ -86,11 +86,18 @@ class AuthorizationPrivilegiosSeeder_1 extends ParentSeeder
             'parent_id' => $modulo2->id,
 
         ]);
-        Privilegio::create([
+        $xsd = Privilegio::create([
             'nombre' => 'Testing',
             'icono' => 'fas fa-question',
             'ruta' => '/testing',
             'parent_id' => $xd->id,
+
+        ]);
+        Privilegio::create([
+            'nombre' => 'fsdfs',
+            'icono' => 'fas fa-question',
+            'ruta' => '/sdfsdf',
+            'parent_id' => $xsd->id,
 
         ]);
     }

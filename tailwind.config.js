@@ -6,7 +6,10 @@ export default {
     "./app/Ship/views/**/*.blade.php",
     "./resources/views/**/*.blade.php",
     "./vendor/robsontenorio/mary/src/View/Components/**/*.php",
+    "./vendor/power-components/livewire-powergrid/resources/views/**/*.php",
+    "./vendor/power-components/livewire-powergrid/src/Themes/Tailwind.php",
   ],
+  darkMode: "class",
   theme: {
     extend: {},
   },

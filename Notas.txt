@@ -1,0 +1,4 @@
+1. El proyecto debe tener php 8.2.
+2. El paquete powergrid solo permite crear sus tablas en "Ship/Livewire/***"
+3. FIXME: Falta dokcerizar.
+4.

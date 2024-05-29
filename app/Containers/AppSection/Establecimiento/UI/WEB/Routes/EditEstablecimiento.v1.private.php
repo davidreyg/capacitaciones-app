@@ -1,8 +1,9 @@
 <?php
 
-use App\Containers\AppSection\Establecimiento\UI\WEB\Controllers\UpdateEstablecimientoController;
+use App\Containers\AppSection\Establecimiento\UI\WEB\Components\EstablecimientoEdit;
 use Illuminate\Support\Facades\Route;
 
-Route::get('establecimientos/{id}/edit', [UpdateEstablecimientoController::class, 'edit'])
+Route::get('establecimientos/{establecimiento}/edit', EstablecimientoEdit::class)
+    ->name('establecimientos.edit')
     ->middleware(['auth:web']);
 

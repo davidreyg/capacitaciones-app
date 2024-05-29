@@ -1,4 +1,4 @@
-<div>
+<div wire:ignore>
     <x-menu activate-by-route>
         <x-menu-item title="Dashboard" icon="tabler.layout-dashboard" link="/" />
         @forelse ($privilegios as $privilegio)

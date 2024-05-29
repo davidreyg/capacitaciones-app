@@ -1,8 +1,8 @@
 <?php
 
-use App\Containers\AppSection\Establecimiento\UI\WEB\Controllers\CreateEstablecimientoController;
+use App\Containers\AppSection\Establecimiento\UI\WEB\Components\EstablecimientoCreate;
 use Illuminate\Support\Facades\Route;
 
-Route::get('establecimientos/create', [CreateEstablecimientoController::class, 'create'])
+Route::get('establecimientos/create', EstablecimientoCreate::class)
     ->middleware(['auth:web']);
 
