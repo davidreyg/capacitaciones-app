@@ -2,10 +2,9 @@
 
 namespace App\Ship\Livewire;
 
-use App\Containers\AppSection\Establecimiento\Models\Establecimiento;
+use App\Containers\AppSection\TipoDocumento\Models\TipoDocumento;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\Blade;
 use PowerComponents\LivewirePowerGrid\Button;
 use PowerComponents\LivewirePowerGrid\Column;
 use PowerComponents\LivewirePowerGrid\Exportable;
@@ -18,7 +17,7 @@ use PowerComponents\LivewirePowerGrid\PowerGridComponent;
 use PowerComponents\LivewirePowerGrid\Responsive;
 use PowerComponents\LivewirePowerGrid\Traits\WithExport;
 
-final class EstablecimientoTable extends PowerGridComponent
+final class TipoDocumentoTable extends PowerGridComponent
 {
     use WithExport;
 
@@ -42,7 +41,7 @@ final class EstablecimientoTable extends PowerGridComponent
 
     public function datasource(): Builder
     {
-        return Establecimiento::query();
+        return TipoDocumento::query();
     }
 
     public function relationSearch(): array
@@ -53,41 +52,19 @@ final class EstablecimientoTable extends PowerGridComponent
     public function fields(): PowerGridFields
     {
         return PowerGrid::fields()
-            // ->add('id')
+            ->add('id')
             ->add('nombre')
-
-            /** Example of custom column using a closure **/
-            ->add('nombre_lower', fn(Establecimiento $model) => strtolower(e($model->nombre)))
-
-            ->add('codigo')
-            ->add('direccion')
-            ->add('telefono')
-            ->add('ris')
-            ->add('has_lab')
-            ->add('has_lab_label', function ($row) {
-                return $row->has_lab ? 'Si' : 'No'; // Yes/No
-            });
+            ->add('digitos');
     }
 
     public function columns(): array
     {
         return [
-            // Column::make('Id', 'id'),
             Column::make('Nombre', 'nombre')
                 ->sortable()
                 ->searchable(),
 
-            Column::make('Codigo', 'codigo'),
-            Column::make('Direccion', 'direccion')
-                ->sortable()
-                ->searchable(),
-
-            Column::make('Telefono', 'telefono'),
-            Column::make('Ris', 'ris')
-                ->sortable()
-                ->searchable(),
-
-            Column::make('¿Laboratorio?', 'has_lab_label'),
+            Column::make('Digitos', 'digitos'),
 
             Column::action('Action')->fixedOnResponsive()
         ];
@@ -101,31 +78,17 @@ final class EstablecimientoTable extends PowerGridComponent
     #[\Livewire\Attributes\On('edit')]
     public function edit($rowId): void
     {
-        $this->redirect(route('establecimientos.edit', $rowId), true);
+        $this->redirect(route('tipo-documentos.edit', $rowId), true);
     }
 
-    #[\Livewire\Attributes\On('delete')]
-    public function delete($rowId): void
-    {
-        // dd('', $rowId);
-        $this->dispatch('editarest', $rowId);
-    }
-
-    public function actions(Establecimiento $row): array
+    public function actions(TipoDocumento $row): array
     {
         return [
-            Button::add('custom')
-                ->render(function ($establecimiento) {
-                    return Blade::render(<<<HTML
-                        <x-button icon="tabler.edit" tooltip="Editar" class="btn-outline btn-warning btn-sm btn-circle" wire:click="edit('$establecimiento->id')" />
-                    HTML);
-                }),
-            Button::add('custom')
-                ->render(function ($establecimiento) {
-                    return Blade::render(<<<HTML
-                        <x-button icon="tabler.trash" tooltip="Eliminar" class="btn-outline btn-error btn-sm btn-circle" wire:click="delete('$establecimiento->id')" />
-                    HTML);
-                }),
+            Button::add('edit')
+                ->slot('Edit: ' . $row->id)
+                ->id()
+                ->class('pg-btn-white dark:ring-pg-primary-600 dark:border-pg-primary-600 dark:hover:bg-pg-primary-700 dark:ring-offset-pg-primary-800 dark:text-pg-primary-300 dark:bg-pg-primary-700')
+                ->dispatch('edit', ['rowId' => $row->id])
         ];
     }
 

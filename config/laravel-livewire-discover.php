@@ -16,6 +16,8 @@ return [
         'auth' => 'App\\Containers\\AppSection\\Authentication\\UI\\WEB\\Components',
         'ship' => 'App\\Ship\\Components',
         'authorization' => 'App\\Containers\\AppSection\\Authorization\\UI\\WEB\\Components',
+        //MODULOS
         'establecimiento' => 'App\\Containers\\AppSection\\Establecimiento\\UI\\WEB\\Components',
+        'tipo-documento' => 'App\\Containers\\AppSection\\TipoDocumento\\UI\\WEB\\Components',
     ],
 ];

@@ -10,6 +10,11 @@ export default {
     "./vendor/power-components/livewire-powergrid/src/Themes/Tailwind.php",
   ],
   darkMode: "class",
+  safelist: [
+    // Lista de clases que siempre se deben incluir en el CSS final
+    "btn-error",
+    "bg-error",
+  ],
   theme: {
     extend: {},
   },

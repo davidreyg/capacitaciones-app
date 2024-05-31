@@ -1,9 +1,5 @@
 <div>
    <x-header title="Editar {{$form->nombre}}" subtitle="" size="text-xl" separator>
-
-      <x-slot:actions>
-         <x-button icon="o-plus" class="btn-primary btn-sm" label="Nuevo" link="/establecimientos/create" />
-      </x-slot:actions>
    </x-header>
    <x-form wire:submit="update">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
