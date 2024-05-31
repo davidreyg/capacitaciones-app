@@ -1,13 +1,15 @@
+import preset from "./vendor/filament/support/tailwind.config.preset";
+
 /** @type {import('tailwindcss').Config} */
 export default {
+  presets: [preset],
   content: [
     "./app/Containers/AppSection/**/UI/WEB/Views/**/*.blade.php",
     // "./app/Containers/AppSection/**/UI/WEB/Views/*.blade.php",
     "./app/Ship/views/**/*.blade.php",
     "./resources/views/**/*.blade.php",
     "./vendor/robsontenorio/mary/src/View/Components/**/*.php",
-    "./vendor/power-components/livewire-powergrid/resources/views/**/*.php",
-    "./vendor/power-components/livewire-powergrid/src/Themes/Tailwind.php",
+    "./vendor/filament/**/*.blade.php",
   ],
   darkMode: "class",
   safelist: [

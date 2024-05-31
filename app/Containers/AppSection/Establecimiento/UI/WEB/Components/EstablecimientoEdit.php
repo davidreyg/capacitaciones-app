@@ -4,6 +4,7 @@ namespace App\Containers\AppSection\Establecimiento\UI\WEB\Components;
 
 use App\Containers\AppSection\Establecimiento\Models\Establecimiento;
 use App\Containers\AppSection\Establecimiento\UI\WEB\Forms\EstablecimientoForm;
+use Filament\Notifications\Notification;
 use Livewire\Component;
 
 class EstablecimientoEdit extends Component
@@ -23,7 +24,10 @@ class EstablecimientoEdit extends Component
     public function update()
     {
         $this->form->update();
-
+        Notification::make()
+            ->title('Editado correctamente.')
+            ->success()
+            ->send();
         return $this->redirect('/establecimientos', true);
     }
 }

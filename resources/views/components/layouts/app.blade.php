@@ -7,18 +7,19 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ isset($title) ? $title.' - '.config('app.name') : config('app.name') }}</title>
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @filamentStyles
+    @vite(['resources/css/app.css'])
 </head>
 
 <body class="font-sans antialiased">
 
     {{-- The navbar with `sticky` and `full-width` --}}
-    <x-nav sticky full-width class="h-20">
+    <x-mary-nav sticky full-width class="h-20">
 
         <x-slot:brand>
             {{-- Drawer toggle for "main-drawer" --}}
             <label for="main-drawer" class="lg:hidden mr-3">
-                <x-icon name="o-bars-3" class="cursor-pointer" />
+                <x-mary-icon name="o-bars-3" class="cursor-pointer" />
             </label>
 
             {{-- Brand --}}
@@ -27,30 +28,30 @@
 
         {{-- Right side actions --}}
         <x-slot:actions>
-            <x-theme-toggle class="btn btn-circle btn-ghost" />
-            <x-dropdown>
+            <x-mary-theme-toggle class="btn btn-circle btn-ghost" />
+            <x-mary-dropdown>
                 <x-slot:trigger>
-                    <x-button icon="o-bell" class="btn-circle btn-outline" />
+                    <x-mary-button icon="o-bell" class="btn-circle btn-outline" />
                 </x-slot:trigger>
 
-                <x-menu-item title="Home" icon="o-envelope" />
-                <x-menu-item title="Messages" icon="o-paper-airplane" badge="78+" />
-                <x-menu-item title="Hello" icon="o-sparkles" badge="new" badge-classes="!badge-warning" />
+                <x-mary-menu-item title="Home" icon="o-envelope" />
+                <x-mary-menu-item title="Messages" icon="o-paper-airplane" badge="78+" />
+                <x-mary-menu-item title="Hello" icon="o-sparkles" badge="new" badge-classes="!badge-warning" />
 
-                <x-menu-item title="Internal link" icon="o-arrow-down" link="/docs/components/alert" />
+                <x-mary-menu-item title="Internal link" icon="o-arrow-down" link="/docs/components/alert" />
 
-                <x-menu-item onclick="document.getElementById('form').submit()" icon="o-power">
+                <x-mary-menu-item onclick="document.getElementById('form').submit()" icon="o-power">
                     Cerrar Sesión
                     <form id="form" action="{{ route('logout') }}" method="POST">@csrf</form>
 
-                </x-menu-item>
+                </x-mary-menu-item>
 
-            </x-dropdown>
+            </x-mary-dropdown>
         </x-slot:actions>
-    </x-nav>
+    </x-mary-nav>
 
     {{-- The main content with `full-width` --}}
-    <x-main with-nav full-width>
+    <x-mary-main with-nav full-width>
 
         {{-- This is a sidebar that works also as a drawer on small screens --}}
         {{-- Notice the `main-drawer` reference here --}}
@@ -65,10 +66,13 @@
         <x-slot:content>
             {{ $slot }}
         </x-slot:content>
-    </x-main>
+    </x-mary-main>
 
     {{-- TOAST area --}}
-    <x-toast />
+    <x-mary-toast />
+    @livewire('notifications')
+    @filamentScripts
+    @vite('resources/js/app.js')
 </body>
 
 </html>
