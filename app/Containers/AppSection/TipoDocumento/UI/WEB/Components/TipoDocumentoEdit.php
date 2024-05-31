@@ -4,6 +4,7 @@ namespace App\Containers\AppSection\TipoDocumento\UI\WEB\Components;
 
 use App\Containers\AppSection\TipoDocumento\Models\TipoDocumento;
 use App\Containers\AppSection\TipoDocumento\UI\WEB\Forms\TipoDocumentoForm;
+use Filament\Notifications\Notification;
 use Livewire\Component;
 
 class TipoDocumentoEdit extends Component
@@ -23,7 +24,10 @@ class TipoDocumentoEdit extends Component
     public function update()
     {
         $this->form->update();
-
+        Notification::make()
+            ->title('Actualizado Correctamente.')
+            ->success()
+            ->send();
         return $this->redirect('/tipo-documentos', true);
     }
 }
