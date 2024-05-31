@@ -37,8 +37,8 @@ class HttpKernel extends LaravelHttpKernel
      * @var array<int, class-string|string>
      */
     protected $middleware = [
-        // Laravel middlewares
-        // \App\Ship\Middlewares\TrustHosts::class,
+            // Laravel middlewares
+            // \App\Ship\Middlewares\TrustHosts::class,
         TrustProxies::class,
         HandleCors::class,
         PreventRequestsDuringMaintenance::class,
@@ -63,8 +63,8 @@ class HttpKernel extends LaravelHttpKernel
         ],
 
         'api' => [
-            // Note: The "throttle" Middleware is registered by the RoutesLoaderTrait in the Core
-            // 'throttle:api',
+                // Note: The "throttle" Middleware is registered by the RoutesLoaderTrait in the Core
+                // 'throttle:api',
             SubstituteBindings::class,
             ValidateJsonContent::class,
             ProcessETagHeadersMiddleware::class,

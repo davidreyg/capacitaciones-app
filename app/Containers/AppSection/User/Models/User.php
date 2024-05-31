@@ -6,9 +6,10 @@ use App\Containers\AppSection\Authentication\Notifications\VerifyEmail;
 use App\Containers\AppSection\User\Enums\Gender;
 use App\Ship\Contracts\MustVerifyEmail;
 use App\Ship\Parents\Models\UserModel as ParentUserModel;
+use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 
-class User extends ParentUserModel implements MustVerifyEmail
+class User extends ParentUserModel implements MustVerifyEmail, FilamentUser
 {
     protected $fillable = [
         'name',
@@ -67,7 +68,12 @@ class User extends ParentUserModel implements MustVerifyEmail
     protected function email(): Attribute
     {
         return new Attribute(
-            get: static fn (string|null $value): string|null => null === $value ? null : strtolower($value),
+            get: static fn(string|null $value): string|null => null === $value ? null : strtolower($value),
         );
+    }
+
+    public function canAccessPanel($panel): bool
+    {
+        return $this->hasAdminRole();
     }
 }

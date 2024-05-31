@@ -3,6 +3,7 @@
 namespace App\Ship\Providers;
 
 use App\Ship\Parents\Providers\MainServiceProvider as ParentMainServiceProvider;
+use App\Ship\Providers\Filament\AdminPanelProvider;
 use Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Config;
@@ -43,6 +44,7 @@ class ShipProvider extends ParentMainServiceProvider
         if ($this->app->isLocal()) {
             $this->app->register(IdeHelperServiceProvider::class);
         }
+        $this->app->register(AdminPanelProvider::class);
 
         Config::macro('unset', function ($key) {
             Arr::forget($this->items, $key);
