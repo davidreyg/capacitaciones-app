@@ -1,8 +1,8 @@
 <div>
-   <x-mary-header title="Editar {{$data['name']}}" subtitle="" size="text-xl" separator>
+   <x-mary-header title="Editar {{$form->name}}" subtitle="" size="text-xl" separator>
    </x-mary-header>
    <form wire:submit="update">
-      {{ $this->form }}
+      @include('appSection@authorization::partials.role-form')
 
       <div class="pt-6 text-end">
          <x-mary-button label="Cancelar" icon="tabler.circle-x" link="/roles" class="btn-sm" />
@@ -11,5 +11,4 @@
       </div>
    </form>
 
-   <x-filament-actions::modals />
 </div>

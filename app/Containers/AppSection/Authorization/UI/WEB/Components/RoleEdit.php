@@ -3,63 +3,27 @@
 namespace App\Containers\AppSection\Authorization\UI\WEB\Components;
 
 use App\Containers\AppSection\Authorization\Models\Role;
-use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
+use App\Containers\AppSection\Authorization\UI\WEB\Forms\RoleForm;
 use Filament\Notifications\Notification;
 use Livewire\Component;
 
-class RoleEdit extends Component implements HasForms
+class RoleEdit extends Component
 {
-    use InteractsWithForms;
+    public RoleForm $form;
 
-    public Role $role;
-    public ?array $data = [];
-
-    public function mount(Role $role): void
+    public function mount(Role $role)
     {
-        $this->form->fill($role->attributesToArray());
+        $this->form->setRole($role);
     }
 
-    public function form(Form $form): Form
+    public function update()
     {
-        return $form
-            ->schema([
-                Grid::make([
-                    'default' => 1,
-                    'sm' => 2,
-                    'md' => 2,
-                ])
-                    ->schema([
-                        // ...
-                        TextInput::make('name')
-                            ->required()->live(true),
-                        Select::make('guard_name')
-                            ->options(['web' => 'web', 'api' => 'api'])
-                            ->required()->live(true),
-                        TextInput::make('display_name')->live(true),
-                        TextInput::make('description')->live(true),
-                    ])
-            ])
-            ->statePath('data')
-            ->model($this->role);
-    }
-
-    public function update(): void
-    {
-        $data = $this->form->getState();
-
-        $this->role->update($data);
-
+        $this->form->update();
         Notification::make()
             ->title('Actualizado Correctamente.')
             ->success()
             ->send();
-        $this->redirect('/roles', true);
-
+        return $this->redirect('/roles', true);
     }
 
     public function render()

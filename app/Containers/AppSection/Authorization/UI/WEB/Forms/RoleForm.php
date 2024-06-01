@@ -40,7 +40,6 @@ class RoleForm extends Form
             'guard_name' => [
                 'required',
                 'string',
-                'gt:0',
             ],
             'display_name' => [
                 'nullable',
@@ -49,7 +48,6 @@ class RoleForm extends Form
             'description' => [
                 'nullable',
                 'string',
-                'gt:0',
             ]
         ];
 
@@ -71,9 +69,7 @@ class RoleForm extends Form
     public function update()
     {
         $this->validate();
-
         $this->role->update($this->all());
-
         $this->reset();
     }
 }
