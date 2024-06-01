@@ -9,7 +9,7 @@ class Role extends SpatieRole
 {
     use ModelTrait;
 
-    protected string $guard_name = 'api';
+    protected string $guard_name = 'web';
 
     protected $fillable = [
         'name',
