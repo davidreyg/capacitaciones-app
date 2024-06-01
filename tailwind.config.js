@@ -2,13 +2,18 @@ import preset from "./vendor/filament/support/tailwind.config.preset";
 
 /** @type {import('tailwindcss').Config} */
 export default {
-  presets: [preset],
+  presets: [preset, require("./vendor/wireui/wireui/tailwind.config.js")],
   content: [
     "./app/Containers/AppSection/**/UI/WEB/Views/**/*.blade.php",
     // "./app/Containers/AppSection/**/UI/WEB/Views/*.blade.php",
     "./app/Ship/views/**/*.blade.php",
     "./resources/views/**/*.blade.php",
     "./vendor/robsontenorio/mary/src/View/Components/**/*.php",
+
+    "./vendor/wireui/wireui/resources/**/*.blade.php",
+    "./vendor/wireui/wireui/ts/**/*.ts",
+    "./vendor/wireui/wireui/src/View/**/*.php",
+
     "./vendor/filament/**/*.blade.php",
   ],
   darkMode: "class",

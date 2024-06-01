@@ -3,8 +3,8 @@
    </x-mary-header>
    <x-mary-form wire:submit="update">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
-         <x-mary-input label="Nombre" wire:model.blur="form.nombre" class="input-sm" first-error-only />
-         <x-mary-input label="Dígitos" wire:model.blur="form.digitos" class="input-sm" first-error-only />
+         <x-input label="Nombre" wire:model.blur="form.nombre" first-error-only />
+         <x-input label="Dígitos" wire:model.blur="form.digitos" first-error-only />
       </div>
       <x-slot:actions>
          <x-mary-button label="Cancelar" icon="tabler.circle-x" link="/tipo-documentos" class="btn-sm" />

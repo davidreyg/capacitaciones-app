@@ -53,7 +53,8 @@
         "ryangjchandler/blade-tabler-icons": "^2.3",
         "staudenmeir/laravel-adjacency-list": "^1.0",
         "webmozart/assert": "^1.11",
-        "wikimedia/composer-merge-plugin": "^2.1"
+        "wikimedia/composer-merge-plugin": "^2.1",
+        "wireui/wireui": "^1.19"
     },
     "require-dev": {
         "ext-intl": "*",
