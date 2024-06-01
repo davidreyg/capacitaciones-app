@@ -22,6 +22,9 @@ class RoleForm extends Form
     #[Validate]
     public $description;
 
+    #[Validate]
+    public array $privilegio_ids = [];
+
     public function setRole(?Role $role)
     {
         $this->role = $role;
@@ -29,6 +32,7 @@ class RoleForm extends Form
         $this->guard_name = $role->guard_name;
         $this->display_name = $role->display_name;
         $this->description = $role->description;
+        $this->privilegio_ids = $role->privilegios()->pluck('id')->toArray();
     }
 
     public function rules()
@@ -48,13 +52,16 @@ class RoleForm extends Form
             'description' => [
                 'nullable',
                 'string',
+            ],
+            'privilegio_ids' => [
+                'nullable',
+                'array',
+            ],
+            'privilegio_ids.*' => [
+                'required',
+                'integer',
             ]
         ];
-
-        // Condición para agregar la regla unique
-        // if (isset($this->role)) {
-        //     $rules['guard_name'][] = Rule::unique('roles')->ignore($this->role);
-        // }
 
         return $rules;
     }
@@ -62,7 +69,8 @@ class RoleForm extends Form
     public function store()
     {
         $this->validate();
-        Role::create($this->all());
+        $role = Role::create($this->all());
+        $role->privilegios()->sync($this->privilegio_ids);
         $this->reset();
     }
 
@@ -70,6 +78,7 @@ class RoleForm extends Form
     {
         $this->validate();
         $this->role->update($this->all());
+        $this->role->privilegios()->sync($this->privilegio_ids);
         $this->reset();
     }
 }

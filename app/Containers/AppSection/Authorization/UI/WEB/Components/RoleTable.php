@@ -13,6 +13,7 @@ use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Livewire\Component;
 
@@ -36,10 +37,20 @@ class RoleTable extends Component implements HasForms, HasTable
                     }),
             ])
             ->filters([
-                // ...
+                SelectFilter::make('guard_name')
+                    ->options([
+                        'web' => 'web',
+                        'api' => 'api',
+                    ])
+                    ->default('web')
             ])
             ->actions([
                 ActionGroup::make([
+                    Action::make('edit')
+                        ->label('Editar')
+                        ->icon('heroicon-o-pencil')
+                        ->color('warning')
+                        ->url(fn(Role $record): string => route('roles.edit', $record)),
                     Action::make('edit')
                         ->label('Editar')
                         ->icon('heroicon-o-pencil')

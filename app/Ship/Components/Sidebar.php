@@ -11,8 +11,7 @@ class Sidebar extends Component
     public function mount()
     {
         $user = auth()->user();
-        $this->modulos = $user->roles->flatMap->privilegios->unique('id')->toArray();
-
+        $this->modulos = $user->roles()->where('guard_name', 'web')->get()->flatMap->privilegios->unique('id')->toArray();
         $this->privilegios = $this->buildTree($this->modulos);
 
     }
@@ -21,20 +20,20 @@ class Sidebar extends Component
         return view('ship::partials.sidebar');
     }
 
-    private function buildTree(array &$elements, $parentId = 0)
+    private function buildTree(array &$elements, $parentId = null)
     {
-        $branch = array();
+        $branch = [];
 
-        foreach ($elements as $element) {
-            if ($element['parent_id'] == $parentId) {
+        foreach ($elements as &$element) {
+            if ($element['parent_id'] === $parentId) {
                 $children = $this->buildTree($elements, $element['id']);
                 if ($children) {
                     $element['children'] = $children;
                 }
-                $branch[$element['id']] = $element;
-                unset($elements[$element['id']]);
+                $branch[] = $element;
             }
         }
+
         return $branch;
     }
 

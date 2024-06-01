@@ -15,11 +15,15 @@ class AuthorizationPermissionsSeeder_1 extends ParentSeeder
     {
         // Default Permissions for every Guard ----------------------------------------------------------
         foreach (array_keys(config('auth.guards')) as $guardName) {
-            $task->run('manage-roles', 'Create, Update, Delete, Get All, Attach/detach permissions to Roles and Get All Permissions.', guardName: $guardName);
-            $task->run('manage-permissions', 'Create, Update, Delete, Get All, Attach/detach permissions to User.', guardName: $guardName);
-            $task->run('create-admins', 'Create new Users (Admins) from the dashboard.', guardName: $guardName);
-            $task->run('manage-admins-access', 'Assign users to Roles.', guardName: $guardName);
-            $task->run('access-dashboard', 'Access the admins dashboard.', guardName: $guardName);
+            // $task->run('manage-roles', 'Create, Update, Delete, Get All, Attach/detach permissions to Roles and Get All Permissions.', guardName: $guardName);
+            // $task->run('manage-permissions', 'Create, Update, Delete, Get All, Attach/detach permissions to User.', guardName: $guardName);
+            // $task->run('create-admins', 'Create new Users (Admins) from the dashboard.', guardName: $guardName);
+            // $task->run('manage-admins-access', 'Assign users to Roles.', guardName: $guardName);
+            // $task->run('access-dashboard', 'Access the admins dashboard.', guardName: $guardName);
+            foreach (config('appSection-authorization.permission_prefixes') as $key => $value) {
+                # code...
+                $task->run($key . '.role', $value . 'Role', guardName: $guardName);
+            }
         }
     }
 }
