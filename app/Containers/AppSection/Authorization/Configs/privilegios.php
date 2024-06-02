@@ -91,22 +91,22 @@ return [
                 'icono' => 'fas fa-question',
                 'ruta' => '/respuestas',
                 'slug' => 'respuestas',
-                'children' => [
-                    [
-                        'nombre' => 'Testing',
-                        'icono' => 'fas fa-question',
-                        'ruta' => '/testing',
-                        'slug' => 'testing',
-                        'children' => [
-                            [
-                                'nombre' => 'fsdfs',
-                                'icono' => 'fas fa-question',
-                                'ruta' => '/sdfsdf',
-                                'slug' => 'sdfsdf',
-                            ],
-                        ],
-                    ],
-                ],
+                // 'children' => [
+                //     [
+                //         'nombre' => 'Testing',
+                //         'icono' => 'fas fa-question',
+                //         'ruta' => '/testing',
+                //         'slug' => 'testing',
+                //         'children' => [
+                //             [
+                //                 'nombre' => 'fsdfs',
+                //                 'icono' => 'fas fa-question',
+                //                 'ruta' => '/sdfsdf',
+                //                 'slug' => 'sdfsdf',
+                //             ],
+                //         ],
+                //     ],
+                // ],
             ],
         ],
     ],
