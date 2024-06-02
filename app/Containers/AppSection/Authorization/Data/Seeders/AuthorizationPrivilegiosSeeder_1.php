@@ -42,13 +42,11 @@ class AuthorizationPrivilegiosSeeder_1 extends ParentSeeder
     private function insertPrivilegios(array $privilegios, int $parentId = null): void
     {
         foreach ($privilegios as $privilegio) {
-            // Get the full route using the helper
-            $fullRoute = privilegio_route($privilegio['nombre']);
             // Insert the privilege and get its ID
             $newPrivilegio = DB::table('privilegios')->insertGetId([
                 'nombre' => $privilegio['nombre'],
                 'icono' => $privilegio['icono'],
-                'ruta' => $fullRoute,
+                'ruta' => $privilegio['ruta'] ?? null,
                 'slug' => $privilegio['slug'],
                 'parent_id' => $parentId,
             ]);

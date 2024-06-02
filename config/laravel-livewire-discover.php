@@ -23,5 +23,6 @@ return [
         'modalidad' => 'App\\Containers\\AppSection\\Modalidad\\UI\\WEB\\Components',
         'oportunidad' => 'App\\Containers\\AppSection\\Oportunidad\\UI\\WEB\\Components',
         'tipo-capacitacion' => 'App\\Containers\\AppSection\\TipoCapacitacion\\UI\\WEB\\Components',
+        'eje-tematico' => 'App\\Containers\\AppSection\\EjeTematico\\UI\\WEB\\Components',
     ],
 ];

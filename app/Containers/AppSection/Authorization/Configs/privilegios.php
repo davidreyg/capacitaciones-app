@@ -75,6 +75,12 @@ return [
                 'slug' => 'tipo-capacitaciones',
             ],
             [
+                'nombre' => 'Ejes Temáticos',
+                'icono' => 'fas fa-user-gear',
+                'ruta' => '/ejes-tematicos',
+                'slug' => 'ejes-tematicos',
+            ],
+            [
                 'nombre' => 'Respuestas',
                 'icono' => 'fas fa-question',
                 'ruta' => '/respuestas',
