@@ -3,7 +3,7 @@
 namespace App\Containers\AppSection\User\Models;
 
 use App\Containers\AppSection\Authentication\Notifications\VerifyEmail;
-use App\Containers\AppSection\User\Enums\Gender;
+use App\Containers\AppSection\Establecimiento\Models\Establecimiento;
 use App\Ship\Contracts\MustVerifyEmail;
 use App\Ship\Parents\Models\UserModel as ParentUserModel;
 use Filament\Models\Contracts\FilamentUser;
@@ -15,8 +15,9 @@ class User extends ParentUserModel implements MustVerifyEmail, FilamentUser
         'name',
         'email',
         'password',
-        'gender',
-        'birth',
+        'nombre_completo',
+        'cargo',
+        'establecimiento_id',
     ];
 
     protected $hidden = [
@@ -27,8 +28,6 @@ class User extends ParentUserModel implements MustVerifyEmail, FilamentUser
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
-        'birth' => 'date',
-        'gender' => Gender::class,
     ];
 
     public function sendEmailVerificationNotificationWithVerificationUrl(string $verificationUrl): void
@@ -75,5 +74,10 @@ class User extends ParentUserModel implements MustVerifyEmail, FilamentUser
     public function canAccessPanel($panel): bool
     {
         return $this->hasAdminRole();
+    }
+
+    public function establecimiento()
+    {
+        return $this->belongsTo(Establecimiento::class);
     }
 }
