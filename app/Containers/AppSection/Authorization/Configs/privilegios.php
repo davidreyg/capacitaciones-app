@@ -81,6 +81,12 @@ return [
                 'slug' => 'ejes-tematicos',
             ],
             [
+                'nombre' => 'Items',
+                'icono' => 'fas fa-user-gear',
+                'ruta' => '/items',
+                'slug' => 'items',
+            ],
+            [
                 'nombre' => 'Respuestas',
                 'icono' => 'fas fa-question',
                 'ruta' => '/respuestas',
