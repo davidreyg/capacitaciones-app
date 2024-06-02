@@ -2,103 +2,59 @@
 
 namespace App\Containers\AppSection\Authorization\Data\Seeders;
 
-use App\Containers\AppSection\Authorization\Models\Privilegio;
 use App\Ship\Exceptions\CreateResourceFailedException;
 use App\Ship\Parents\Seeders\Seeder as ParentSeeder;
+use Illuminate\Support\Facades\DB;
 
 class AuthorizationPrivilegiosSeeder_1 extends ParentSeeder
 {
-
     /**
      * @throws CreateResourceFailedException
      */
     public function run(): void
     {
-        $modulo1 = Privilegio::create([
-            'nombre' => 'Gestionar Capacitaciones',
-            'icono' => 'o-academic-cap',
+        // Load the privileges array from the config file
+        $privilegios = config('privilegios');
 
-        ]);
-        Privilegio::create([
-            'nombre' => 'Registrar Capacitacion',
-            'icono' => 'fas fa-stethoscope',
-            'ruta' => '/triajes/registrar',
-            'parent_id' => $modulo1->id,
+        // Start a database transaction
+        DB::beginTransaction();
 
-        ]);
-        Privilegio::create([
-            'nombre' => 'Buscar Capacitacion',
-            'icono' => 'o-magnifying-glass',
-            'ruta' => '/diagnosticos/formulario',
-            'parent_id' => $modulo1->id,
+        try {
+            // Insert the privileges
+            $this->insertPrivilegios($privilegios);
 
-        ]);
-        $modulo2 = Privilegio::create([
-            'nombre' => 'Mantenimiento',
-            'icono' => 'tabler.settings',
-            // 'ruta' => '',
-            // 'ruta' => '',
+            // Commit the transaction
+            DB::commit();
+        } catch (\Exception $e) {
+            // Rollback the transaction if something goes wrong
+            DB::rollBack();
 
-        ]);
+            throw new CreateResourceFailedException($e->getMessage());
+        }
+    }
 
-        Privilegio::create([
-            'nombre' => 'Establecimientos',
-            'icono' => 'fas fa-city',
-            'ruta' => '/establecimientos',
-            'parent_id' => $modulo2->id,
+    /**
+     * Insert privileges recursively.
+     *
+     * @param array $privilegios
+     * @param int|null $parentId
+     */
+    private function insertPrivilegios(array $privilegios, int $parentId = null): void
+    {
+        foreach ($privilegios as $privilegio) {
+            // Insert the privilege and get its ID
+            $newPrivilegio = DB::table('privilegios')->insertGetId([
+                'nombre' => $privilegio['nombre'],
+                'icono' => $privilegio['icono'],
+                'ruta' => $privilegio['ruta'] ?? null,
+                'parent_id' => $parentId,
+            ]);
 
-        ]);
-
-        Privilegio::create([
-            'nombre' => 'Tipo de Documento',
-            'icono' => 'fas fa-address-card',
-            'ruta' => '/tipo-documentos',
-            'parent_id' => $modulo2->id,
-
-        ]);
-
-        Privilegio::create([
-            'nombre' => 'Personal Administrativo',
-            'icono' => 'fas fa-people-group',
-            'ruta' => '/empleados',
-            'parent_id' => $modulo2->id,
-
-        ]);
-
-        Privilegio::create([
-            'nombre' => 'Roles',
-            'icono' => 'fas fa-shield-halved',
-            'ruta' => '/roles',
-            'parent_id' => $modulo2->id,
-
-        ]);
-        Privilegio::create([
-            'nombre' => 'Usuarios',
-            'icono' => 'fas fa-user-gear',
-            'ruta' => '/users',
-            'parent_id' => $modulo2->id,
-
-        ]);
-        $xd = Privilegio::create([
-            'nombre' => 'Respuestas',
-            'icono' => 'fas fa-question',
-            'ruta' => '/respuestas',
-            'parent_id' => $modulo2->id,
-
-        ]);
-        $xsd = Privilegio::create([
-            'nombre' => 'Testing',
-            'icono' => 'fas fa-question',
-            'ruta' => '/testing',
-            'parent_id' => $xd->id,
-
-        ]);
-        Privilegio::create([
-            'nombre' => 'fsdfs',
-            'icono' => 'fas fa-question',
-            'ruta' => '/sdfsdf',
-            'parent_id' => $xsd->id,
-
-        ]);
+            // Check if there are sub-privileges to insert
+            if (isset($privilegio['children']) && is_array($privilegio['children'])) {
+                // Insert sub-privileges recursively with the new parent ID
+                $this->insertPrivilegios($privilegio['children'], $newPrivilegio);
+            }
+        }
     }
 }

@@ -20,5 +20,6 @@ return [
         'establecimiento' => 'App\\Containers\\AppSection\\Establecimiento\\UI\\WEB\\Components',
         'tipo-documento' => 'App\\Containers\\AppSection\\TipoDocumento\\UI\\WEB\\Components',
         'user' => 'App\\Containers\\AppSection\\User\\UI\\WEB\\Components',
+        'modalidad' => 'App\\Containers\\AppSection\\Modalidad\\UI\\WEB\\Components',
     ],
 ];
