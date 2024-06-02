@@ -26,12 +26,14 @@ class ModalidadForm extends Form
             'nombre' => [
                 'required',
                 'max:50',
-                'unique:modalidads'
             ],
         ];
         // Condición para agregar la regla unique
         if (isset($this->modalidad)) {
             $rules['nombre'][] = Rule::unique('modalidads')->ignore($this->modalidad);
+        } else {
+            $rules['nombre'][] = Rule::unique('modalidads');
+
         }
         return $rules;
     }

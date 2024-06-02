@@ -51,6 +51,11 @@ return [
                 'ruta' => '/modalidades',
             ],
             [
+                'nombre' => 'Oportunidades',
+                'icono' => 'fas fa-user-gear',
+                'ruta' => '/oportunidades',
+            ],
+            [
                 'nombre' => 'Respuestas',
                 'icono' => 'fas fa-question',
                 'ruta' => '/respuestas',
