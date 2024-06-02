@@ -19,6 +19,7 @@ return new class () extends Migration {
             $table->text('descripcion')->nullable();
             $table->string('icono')->nullable();
             $table->string('ruta')->nullable();
+            $table->string('slug');
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->foreign('parent_id')
                 ->references('id')->on('privilegios')->onDelete('cascade');
