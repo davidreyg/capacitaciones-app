@@ -26,5 +26,6 @@ return [
         'eje-tematico' => 'App\\Containers\\AppSection\\EjeTematico\\UI\\WEB\\Components',
         'item' => 'App\\Containers\\AppSection\\Item\\UI\\WEB\\Components',
         'respuesta' => 'App\\Containers\\AppSection\\Respuesta\\UI\\WEB\\Components',
+        'costo' => 'App\\Containers\\AppSection\\Costo\\UI\\WEB\\Components',
     ],
 ];

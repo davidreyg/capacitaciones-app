@@ -87,6 +87,12 @@ return [
                 'slug' => 'items',
             ],
             [
+                'nombre' => 'Costos',
+                'icono' => 'fas fa-user-gear',
+                'ruta' => '/costos',
+                'slug' => 'costos',
+            ],
+            [
                 'nombre' => 'Respuestas',
                 'icono' => 'fas fa-question',
                 'ruta' => '/respuestas',
