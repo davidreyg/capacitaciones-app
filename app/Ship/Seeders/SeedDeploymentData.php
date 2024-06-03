@@ -13,6 +13,15 @@ class SeedDeploymentData extends Seeder
      */
     public function run(): void
     {
-        // Create data for live deployment here
+        /* RESPUESTAS  */
+        \DB::table('respuestas')->insert(
+            [
+                ['nombre' => 'Curso'],
+                ['nombre' => 'Taller'],
+                ['nombre' => 'Dimoplado'],
+                ['nombre' => 'Pasantia'],
+                ['nombre' => 'Seminarios'],
+            ]
+        );
     }
 }

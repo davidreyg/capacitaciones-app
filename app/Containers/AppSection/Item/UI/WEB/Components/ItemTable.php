@@ -55,7 +55,7 @@ class ItemTable extends Component implements HasForms, HasTable
             ])
             ->bulkActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                    DeleteBulkAction::make()->databaseTransaction(),
                 ]),
             ]);
     }

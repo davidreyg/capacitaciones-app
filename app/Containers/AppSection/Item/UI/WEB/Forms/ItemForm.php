@@ -3,6 +3,7 @@
 namespace App\Containers\AppSection\Item\UI\WEB\Forms;
 
 use App\Containers\AppSection\Item\Models\Item;
+use App\Containers\AppSection\Respuesta\Models\Respuesta;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
@@ -15,13 +16,19 @@ class ItemForm extends Form
     public $nombre;
 
     #[Validate]
-    public $descripcion;
+    public $item_respuesta = [];
 
     public function setItem(?Item $item)
     {
         $this->item = $item;
         $this->nombre = $item->nombre;
-        $this->descripcion = $item->descripcion;
+        $this->item_respuesta = $item->respuestas->map(function (Respuesta $respuesta) {
+            return [
+                'respuesta_id' => $respuesta->pivot->respuesta_id,
+                'respuesta_nombre' => $respuesta->nombre,
+                'valor' => $respuesta->pivot->valor,
+            ];
+        })->toArray();
     }
 
     public function rules()
@@ -31,9 +38,17 @@ class ItemForm extends Form
                 'required',
                 'max:50',
             ],
-            'descripcion' => [
+            'item_respuesta' => [
                 'nullable',
-                'max:200',
+                'array',
+            ],
+            'item_respuesta.*.respuesta_id' => [
+                'required',
+            ],
+            'item_respuesta.*.valor' => [
+                'required',
+                'string',
+                'max:2',
             ],
         ];
         // Condición para agregar la regla unique
@@ -46,19 +61,41 @@ class ItemForm extends Form
         return $rules;
     }
 
+    public function validationAttributes()
+    {
+        return [
+            'item_respuesta.*.valor' => 'valor',
+            'item_respuesta.*.respuesta_id' => 'respuesta',
+        ];
+    }
+
     public function store()
     {
-        $this->validate();
-        Item::create($this->all());
-        $this->reset();
+        return \DB::transaction(function () {
+            $this->validate();
+            $item = Item::create($this->all());
+            foreach ($this->item_respuesta as $respuesta) {
+                $item->respuestas()->attach($respuesta['respuesta_id'], ['valor' => $respuesta['valor']]);
+            }
+            $this->reset();
+        });
     }
 
     public function update()
     {
-        $this->validate();
+        return \DB::transaction(function () {
+            $this->validate();
+            $this->item->update($this->all());
+            // Preparar datos para sincronización
+            $syncData = [];
+            foreach ($this->item_respuesta as $respuesta) {
+                $syncData[$respuesta['respuesta_id']] = ['valor' => $respuesta['valor']];
+            }
 
-        $this->item->update($this->all());
+            // Sincronizar respuestas y valores
+            $this->item->respuestas()->sync($syncData);
+            $this->reset();
+        });
 
-        $this->reset();
     }
 }
