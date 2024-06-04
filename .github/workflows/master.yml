@@ -50,6 +50,7 @@ jobs:
       run: |
         echo "::set-output name=version::$(node -v)"
     - run: npm ci
+    - run: npm run build
 
     - name: Get node_modules cache
       uses: actions/cache@v3.0.2
@@ -64,7 +65,7 @@ jobs:
     needs: ['install-dependencies']
     runs-on: ubuntu-latest
     steps:
-    - run: npm run build
+    
 
     - name: 📂 Sync files
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
