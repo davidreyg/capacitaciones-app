@@ -99,6 +99,12 @@ return [
                 'slug' => 'costos',
             ],
             [
+                'nombre' => 'Niveles de Evaluación',
+                'icono' => 'fas fa-user-gear',
+                'ruta' => '/niveles',
+                'slug' => 'niveles',
+            ],
+            [
                 'nombre' => 'Respuestas',
                 'icono' => 'fas fa-question',
                 'ruta' => '/respuestas',

@@ -28,5 +28,6 @@ return [
         'respuesta' => 'App\\Containers\\AppSection\\Respuesta\\UI\\WEB\\Components',
         'costo' => 'App\\Containers\\AppSection\\Costo\\UI\\WEB\\Components',
         'capacitacion' => 'App\\Containers\\AppSection\\Capacitacion\\UI\\WEB\\Components',
+        'nivel' => 'App\\Containers\\AppSection\\Nivel\\UI\\WEB\\Components',
     ],
 ];

@@ -19,6 +19,11 @@ return new class () extends Migration {
             $table->tinyInteger('creditos');
             $table->smallInteger('numero_horas');
             $table->text('problema');
+            // RELACIONES
+            $table->foreignId('tipo_capacitacion_id')->constrained();
+            $table->foreignId('eje_tematico_id')->constrained();
+            $table->foreignId('modalidad_id')->constrained();
+            $table->foreignId('oportunidad_id')->constrained();
             $table->timestamps();
         });
     }
