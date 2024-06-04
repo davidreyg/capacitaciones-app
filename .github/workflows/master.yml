@@ -4,8 +4,16 @@ on:
       - "main"
 name: 🚀 Deploy website on push
 jobs:
-  web-deploy:
-    name: 🎉 Deploy
+  avoid-redundancy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action
+        with:
+          access_token: ${{ github.access_token }}
+
+  install-dependencies:
+    name: 🎉 Build
     runs-on: ubuntu-latest
     steps:
     - name: 🚚 Get latest code
@@ -41,6 +49,7 @@ jobs:
       id: node
       run: |
         echo "::set-output name=version::$(node -v)"
+    - run: npm ci
 
     - name: Get node_modules cache
       uses: actions/cache@v3.0.2
@@ -51,7 +60,10 @@ jobs:
         # Adding node version as cache key
         key: ${{ runner.os }}-node_modules-${{ hashFiles('**/package-lock.json') }}-${{ steps.node.outputs.version }}
 
-    - run: npm ci
+  deploy-cpanel:
+    needs: ['install-dependencies']
+    runs-on: ubuntu-latest
+    steps:
     - run: npm run build
 
     - name: 📂 Sync files
