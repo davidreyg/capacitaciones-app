@@ -1,29 +1,19 @@
-<div class="grid grid-cols-1 md:grid-cols-2 gap-2">
-    {{--
-    <x-input label="Nombre" wire:model.blur="form.nombre" /> --}}
-    {{--
-    <x-select label="Tipo" placeholder="Seleccione una opción" :options="config('appSection-costo.tipos_costo')"
-        wire:model.defer="form.tipo" /> --}}
+<div class="grid grid-cols-1 md:grid-cols-3 sm:grid-cols-2 gap-2">
+    <x-input label="Codigo" wire:model.blur="form.codigo" />
+    <x-select label="Tipo de Capacitación" placeholder="Seleccione una opción" :options="$tipo_capacitaciones"
+        option-label="nombre" option-value="id" wire:model.defer="form.tipo_capacitacion_id" />
+    <x-select label="Eje Temático" placeholder="Seleccione una opción" :options="$ejes_tematicos" option-label="nombre"
+        option-value="id" wire:model.defer="form.eje_tematico_id" />
+    <x-select label="Modalidad" placeholder="Seleccione una opción" :options="$modalidades" option-label="nombre"
+        option-value="id" wire:model.defer="form.modalidad_id" />
+    <x-select label="Oportunidad" placeholder="Seleccione una opción" :options="$oportunidades" option-label="nombre"
+        option-value="id" wire:model.defer="form.oportunidad_id" />
 </div>
-<x-mary-steps wire:model="step" class="border my-5 p-5 w-full">
-    <x-mary-step step="1" text="Datos generales">
-        <div>
-            <x-input label="Nombre" wire:model.blur="form.nombre" />
-
-        </div>
-
-    </x-mary-step>
-    <x-mary-step step="2" text="Payment">
-        <div>
-            <x-input label="Nombres" wire:value="xdxd" />
-        </div>
-    </x-mary-step>
-    <x-mary-step step="3" text="Receive Product" class="bg-orange-500/20">
-        Receive Product
-    </x-mary-step>
-</x-mary-steps>
-
-{{-- Create some methods to increase/decrease the model to match the step number --}}
-{{-- You could use Alpine with `$wire` here --}}
-<x-button label="Previous" wire:click="back" />
-<x-button label="Next" wire:click="next" />
+<div class="grid  grid-rows-2 grid-flow-col gap-4">
+    <x-textarea label="Nombre" wire:model.blur="form.nombre" />
+    <x-textarea label="Perfil" wire:model.blur="form.perfil" />
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 sm:grid-cols-2 gap-2">
+    <x-textarea label="Objetivo de Aprendizaje" wire:model.blur="form.objetivo_aprendizaje" />
+    <x-textarea label="Objetivo de Desempeño" wire:model.blur="form.objetivo_desempeño" />
+</div>

@@ -13,9 +13,30 @@ class SeedDeploymentData extends Seeder
      */
     public function run(): void
     {
-        $sqlFile = base_path('database/data/items.sql');
-        if (file_exists($sqlFile)) {
-            $sql = file_get_contents($sqlFile);
+        $items = base_path('database/data/items.sql');
+        $tipo_capacitaciones = base_path('database/data/tipos_capacitacion.sql');
+        $ejes_tematicos = base_path('database/data/ejes_tematicos.sql');
+        $modalidades = base_path('database/data/modalidades.sql');
+        $oportunidades = base_path('database/data/oportunidades.sql');
+
+        if (file_exists($items)) {
+            $sql = file_get_contents($items);
+            \DB::unprepared($sql);
+        }
+        if (file_exists($tipo_capacitaciones)) {
+            $sql = file_get_contents($tipo_capacitaciones);
+            \DB::unprepared($sql);
+        }
+        if (file_exists($ejes_tematicos)) {
+            $sql = file_get_contents($ejes_tematicos);
+            \DB::unprepared($sql);
+        }
+        if (file_exists($modalidades)) {
+            $sql = file_get_contents($modalidades);
+            \DB::unprepared($sql);
+        }
+        if (file_exists($oportunidades)) {
+            $sql = file_get_contents($oportunidades);
             \DB::unprepared($sql);
         }
     }

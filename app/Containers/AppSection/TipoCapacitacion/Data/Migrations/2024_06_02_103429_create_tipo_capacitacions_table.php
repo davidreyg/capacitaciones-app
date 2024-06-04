@@ -10,8 +10,6 @@ return new class () extends Migration {
         Schema::create('tipo_capacitacions', function (Blueprint $table) {
             $table->id();
             $table->string('nombre', 50);
-            $table->timestamps();
-            // $table->softDeletes();
         });
     }
 
