@@ -65,7 +65,6 @@ jobs:
   #       path: . # or path/to/artifact
 
   deploy-cpanel:
-    needs: ['install-dependencies']
     runs-on: ubuntu-latest
     steps:
     # - name: Obtener codigo
