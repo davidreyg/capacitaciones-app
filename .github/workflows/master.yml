@@ -10,7 +10,7 @@ jobs:
       - name: Cancel Previous Runs
         uses: styfle/cancel-workflow-action
         with:
-          access_token: ${{ github.access_token }}
+          workflow_id: all
 
   # install-dependencies:
   #   name: 🎉 Build
