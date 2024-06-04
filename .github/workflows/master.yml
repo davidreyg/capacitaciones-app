@@ -72,7 +72,8 @@ jobs:
     #   with:
     #     path: proyecto # or path/to/artifact
     # - run: ls -R
-
+    - name: 🚚 Get latest code
+      uses: actions/checkout@v3
     - name: 📂 Sync files
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
