@@ -62,17 +62,18 @@ jobs:
     - uses: actions/upload-artifact@v4
       with:
         name: proyecto
-        path: / # or path/to/artifact
+        path: . # or path/to/artifact
 
   deploy-cpanel:
     needs: ['install-dependencies']
     runs-on: ubuntu-latest
     steps:
     - name: Obtener codigo
-      uses: actions/upload-artifact@v4
+      uses: actions/download-artifact@v4
       with:
-        name: proyecto
-        path: ./ # or path/to/artifact
+        path: proyecto # or path/to/artifact
+    - run: ls -R
+
     - name: 📂 Sync files
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
