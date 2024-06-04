@@ -9,7 +9,7 @@ return [
             [
                 'nombre' => 'Registrar Capacitacion',
                 'icono' => 'fas fa-stethoscope',
-                'ruta' => '/triajes/registrar',
+                'ruta' => '/capacitaciones/matricula',
                 'slug' => 'registrar',
             ],
             [
@@ -26,6 +26,12 @@ return [
         'ruta' => '/mantenimiento',
         'slug' => 'mantenimiento',
         'children' => [
+            [
+                'nombre' => 'Capacitaciones',
+                'icono' => 'fas fa-city',
+                'ruta' => '/capacitaciones',
+                'slug' => 'capacitaciones',
+            ],
             [
                 'nombre' => 'Establecimientos',
                 'icono' => 'fas fa-city',

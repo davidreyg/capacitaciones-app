@@ -13,15 +13,10 @@ class SeedDeploymentData extends Seeder
      */
     public function run(): void
     {
-        /* RESPUESTAS  */
-        \DB::table('respuestas')->insert(
-            [
-                ['nombre' => 'Curso'],
-                ['nombre' => 'Taller'],
-                ['nombre' => 'Dimoplado'],
-                ['nombre' => 'Pasantia'],
-                ['nombre' => 'Seminarios'],
-            ]
-        );
+        $sqlFile = base_path('database/data/items.sql');
+        if (file_exists($sqlFile)) {
+            $sql = file_get_contents($sqlFile);
+            \DB::unprepared($sql);
+        }
     }
 }
