@@ -9,16 +9,16 @@ return new class () extends Migration {
     {
         Schema::create('capacitacions', function (Blueprint $table) {
             $table->id();
-            $table->string('codigo', 20);
+            $table->string('codigo', 20)->unique();
             $table->date('fecha_inicio');
             $table->date('fecha_fin');
             $table->string('nombre', 225);
-            $table->text('perfil')->nullable();
-            $table->text('objetivo_aprendizaje');
-            $table->text('objetivo_desempeño');
-            $table->tinyInteger('creditos');
-            $table->smallInteger('numero_horas');
-            $table->text('problema');
+            $table->tinyText('perfil')->nullable();
+            $table->tinyText('objetivo_aprendizaje');
+            $table->tinyText('objetivo_desempeño');
+            $table->tinyInteger('creditos')->unsigned();
+            $table->tinyInteger('numero_horas')->unsigned();
+            $table->tinyText('problema');
             // RELACIONES
             $table->foreignId('tipo_capacitacion_id')->constrained();
             $table->foreignId('eje_tematico_id')->constrained();

@@ -91,7 +91,6 @@ class ItemForm extends Form
             foreach ($this->item_respuesta as $respuesta) {
                 $syncData[$respuesta['respuesta_id']] = ['valor' => $respuesta['valor']];
             }
-
             // Sincronizar respuestas y valores
             $this->item->respuestas()->sync($syncData);
             $this->reset();

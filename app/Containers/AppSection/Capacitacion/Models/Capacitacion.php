@@ -2,6 +2,8 @@
 
 namespace App\Containers\AppSection\Capacitacion\Models;
 
+use App\Containers\AppSection\Item\Models\Item;
+use App\Containers\AppSection\Nivel\Models\Nivel;
 use App\Ship\Parents\Models\Model as ParentModel;
 
 class Capacitacion extends ParentModel
@@ -17,9 +19,24 @@ class Capacitacion extends ParentModel
         'creditos',
         'numero_horas',
         'problema',
+        'tipo_capacitacion_id',
+        'eje_tematico_id',
+        'modalidad_id',
+        'oportunidad_id',
     ];
     /**
      * A resource key to be used in the serialized responses.
      */
     protected string $resourceKey = 'Capacitacion';
+
+    public function nivels()
+    {
+        return $this->belongsToMany(Nivel::class);
+    }
+
+    public function items()
+    {
+        return $this->belongsToMany(Item::class)
+            ->withPivot(['respuesta_id']);
+    }
 }

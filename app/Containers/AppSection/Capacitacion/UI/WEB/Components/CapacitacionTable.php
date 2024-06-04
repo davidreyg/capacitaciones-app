@@ -38,7 +38,7 @@ class CapacitacionTable extends Component implements HasForms, HasTable
                         ->label('Editar')
                         ->icon('heroicon-o-pencil')
                         ->color('warning')
-                        ->url(fn(Capacitacion $record): string => route('Capacitacions.edit', $record)),
+                        ->url(fn(Capacitacion $record): string => route('capacitaciones.edit', $record)),
                     DeleteAction::make()->databaseTransaction(),
 
                 ])->color('info')
