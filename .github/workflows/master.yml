@@ -65,11 +65,13 @@ jobs:
     needs: ['install-dependencies']
     runs-on: ubuntu-latest
     steps:
-    
-
     - name: 📂 Sync files
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
         server: ftp.dirislimasur.gob.pe
         username: capacitaciones@capacitaciones.dirislimasur.gob.pe
         password: Daregu3005
+        exclude: |
+          **/vendor/**
+          **/.git*/**
+          **/node_modules/**
