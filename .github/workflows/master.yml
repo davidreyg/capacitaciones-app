@@ -72,6 +72,27 @@ jobs:
     #   with:
     #     path: proyecto # or path/to/artifact
     # - run: ls -R
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2.19'
+        extensions: mbstring, dom, fileinfo, mysql, gd, opcache, intl, mbstring, zip, exif, pcntl, bcmath, gd, mysqli, pdo_mysql
+
+    - name: Get Composer cache directory
+      id: composer-cache1
+      run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+    - name: Get Composer cache
+      uses: actions/cache@v3.0.2
+      id: composer-cache
+      with:
+        path: ${{ steps.composer-cache1.outputs.dir }}
+        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-composer-
+
+    - name: Install Composer dependencies
+      run: composer install --no-progress --prefer-dist --optimize-autoloader
     - name: 🚚 Get latest code
       uses: actions/checkout@v3
     - uses: actions/setup-node@v3.1.1
