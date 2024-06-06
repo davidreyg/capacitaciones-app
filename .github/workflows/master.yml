@@ -72,6 +72,8 @@ jobs:
     #   with:
     #     path: proyecto # or path/to/artifact
     # - run: ls -R
+    - name: 🚚 Get latest code
+      uses: actions/checkout@v3
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
       with:
@@ -93,8 +95,6 @@ jobs:
 
     - name: Install Composer dependencies
       run: composer install --no-progress --prefer-dist --optimize-autoloader
-    - name: 🚚 Get latest code
-      uses: actions/checkout@v3
     - uses: actions/setup-node@v3.1.1
       with:
         node-version: lts/*
