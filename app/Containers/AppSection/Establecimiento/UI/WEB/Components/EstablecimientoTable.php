@@ -60,7 +60,7 @@ class EstablecimientoTable extends Component implements HasForms, HasTable
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),
-            ])->deferLoading();
+            ]);
     }
 
     public function render()
