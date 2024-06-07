@@ -21,13 +21,24 @@ class EstablecimientoForm extends Form
     public $direccion;
 
     #[Validate]
-    public $telefono;
+    public $categoria;
 
     #[Validate]
     public $ris;
 
     #[Validate]
-    public $has_lab;
+    public $distrito;
+    #[Validate]
+    public $correo;
+
+    #[Validate]
+    public $telefono;
+
+    #[Validate]
+    public $tipo;
+
+    #[Validate]
+    public $parent_id;
 
     public function setEstablecimiento(?Establecimiento $establecimiento)
     {
@@ -35,9 +46,13 @@ class EstablecimientoForm extends Form
         $this->nombre = $establecimiento->nombre;
         $this->codigo = $establecimiento->codigo;
         $this->direccion = $establecimiento->direccion;
+        $this->categoria = $establecimiento->categoria;
         $this->telefono = $establecimiento->telefono;
         $this->ris = $establecimiento->ris;
-        $this->has_lab = $establecimiento->has_lab;
+        $this->distrito = $establecimiento->distrito;
+        $this->correo = $establecimiento->correo;
+        $this->tipo = $establecimiento->tipo;
+        $this->parent_id = $establecimiento->parent_id;
     }
 
     public function rules()
@@ -53,28 +68,49 @@ class EstablecimientoForm extends Form
                 'gt:0',
             ],
             'direccion' => [
-                'required',
+                'nullable',
                 'max:60',
             ],
+            'categoria' => [
+                Rule::requiredIf($this->tipo === config('appSection-establecimiento.tipo_establecimiento.ESTABLECIMIENTO')),
+                'max:4',
+            ],
             'ris' => [
+                Rule::requiredIf($this->tipo === config('appSection-establecimiento.tipo_establecimiento.ESTABLECIMIENTO')),
+                'max:60',
+            ],
+            'distrito' => [
+                Rule::requiredIf($this->tipo === config('appSection-establecimiento.tipo_establecimiento.ESTABLECIMIENTO')),
+                'max:60',
+            ],
+            'correo' => [
                 'required',
-                'max:100',
+                'email',
+                'max:60',
             ],
             'telefono' => [
-                'required',
+                'nullable',
                 'numeric',
                 'integer',
                 'gt:0',
             ],
-            'has_lab' => [
+            'tipo' => [
                 'required',
-                'boolean',
+                'max:30',
+            ],
+            'parent_id' => [
+                'nullable',
+                Rule::requiredIf($this->tipo !== config('appSection-establecimiento.tipo_establecimiento.DIRIS')),
+                'exists:establecimientos,id',
             ],
         ];
 
         // Condición para agregar la regla unique
         if (isset($this->establecimiento)) {
             $rules['codigo'][] = Rule::unique('establecimientos')->ignore($this->establecimiento);
+        } else {
+            $rules['codigo'][] = Rule::unique('establecimientos');
+
         }
 
         return $rules;

@@ -11,10 +11,16 @@ return new class () extends Migration {
             $table->id();
             $table->string('nombre', 255);
             $table->integer('codigo')->unsigned()->unique();
-            $table->string('direccion', 60);
-            $table->string('ris', 60);
+            $table->string('direccion', 100)->nullable();
+            $table->string('categoria', 4)->nullable();
+            $table->string('ris', 60)->nullable();
+            $table->string('distrito', 60)->nullable();
+            $table->string('correo', 60)->nullable();
             $table->integer('telefono')->unsigned()->nullable();
-            $table->boolean('has_lab');
+            $table->string('tipo', 30);
+            $table->unsignedBigInteger('parent_id')->nullable();
+            $table->foreign('parent_id')
+                ->references('id')->on('establecimientos')->onDelete('cascade');
         });
     }
 

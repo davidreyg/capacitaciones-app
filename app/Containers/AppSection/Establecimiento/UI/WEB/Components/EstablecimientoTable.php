@@ -19,6 +19,7 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
@@ -35,17 +36,14 @@ class EstablecimientoTable extends Component implements HasForms, HasTable
             ->columns([
                 TextColumn::make('nombre')->searchable(),
                 TextColumn::make('codigo')->searchable(),
-                TextColumn::make('direccion')->searchable(),
                 TextColumn::make('telefono')->searchable(),
                 TextColumn::make('ris')->searchable(),
-                IconColumn::make('has_lab')
-                    ->boolean()
-                    ->sortable()
-                    ->label('¿Laboratorio?')
-                    ->alignCenter(),
+                TextColumn::make('tipo'),
             ])
             ->filters([
-                // ...
+                SelectFilter::make('tipo')
+                    ->multiple()
+                    ->options(config('appSection-establecimiento.tipo_establecimiento'))
             ])
             ->actions([
                 ActionGroup::make([
@@ -54,25 +52,6 @@ class EstablecimientoTable extends Component implements HasForms, HasTable
                         ->icon('heroicon-o-pencil')
                         ->color('warning')
                         ->url(fn(Establecimiento $record): string => route('establecimientos.edit', $record)),
-                    ViewAction::make()->form([
-                        Grid::make([
-                            'default' => 1,
-                            'sm' => 2,
-                            'md' => 3,
-                            'lg' => 3,
-                            'xl' => 3,
-                            '2xl' => 3,
-                        ])->schema([
-                                    TextInput::make('nombre')
-                                        ->required()
-                                        ->maxLength(255),
-                                    TextInput::make('codigo'),
-                                    TextInput::make('direccion'),
-                                    TextInput::make('telefono'),
-                                    TextInput::make('ris'),
-                                    Checkbox::make('has_lab')->label('¿Laboratorio?'),
-                                ])
-                    ])->label('Ver')->color('info'),
                     DeleteAction::make(),
 
                 ])->color('info')
@@ -81,7 +60,7 @@ class EstablecimientoTable extends Component implements HasForms, HasTable
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])->deferLoading();
     }
 
     public function render()

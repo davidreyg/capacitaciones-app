@@ -10,5 +10,10 @@ return [
     |
     |
     */
+    "tipo_establecimiento" => [
+        "DIRIS" => "DIRIS",
+        "RIS" => "RIS",
+        "ESTABLECIMIENTO" => "ESTABLECIMIENTO",
+    ],
 
 ];

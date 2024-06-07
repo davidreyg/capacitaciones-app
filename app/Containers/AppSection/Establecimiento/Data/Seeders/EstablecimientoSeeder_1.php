@@ -15,14 +15,15 @@ class EstablecimientoSeeder_1 extends ParentSeeder
     public function run(): void
     {
         $data = [
-            'nombre' => 'Establecmiento1',
-            'codigo' => 123456,
+            'nombre' => 'DIRIS SEDE ADMINISTRATIVA',
+            'codigo' => 99999999,
             'direccion' => 'Calle Los Pepitos S/N',
             'telefono' => 955927839,
             'ris' => 'LIMA',
-            'has_lab' => true,
+            'tipo' => 'DIRIS',
+            'parent_id' => null
         ];
         Establecimiento::create($data);
-        Establecimiento::factory(10)->create();
+        // Establecimiento::factory(10)->create();
     }
 }

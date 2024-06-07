@@ -13,9 +13,13 @@ class Establecimiento extends ParentModel
         'nombre',
         'codigo',
         'direccion',
+        'categoria',
         'telefono',
         'ris',
-        'has_lab',
+        'tipo',
+        'distrito',
+        'correo',
+        'parent_id',
     ];
 
     protected $hidden = [

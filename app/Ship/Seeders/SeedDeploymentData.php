@@ -20,6 +20,7 @@ class SeedDeploymentData extends Seeder
         $oportunidades = base_path('database/data/oportunidades.sql');
         $niveles = base_path('database/data/niveles.sql');
         $costos = base_path('database/data/costos.sql');
+        $establecimientos = base_path('database/data/establecimientos.sql');
 
         if (file_exists($items)) {
             $sql = file_get_contents($items);
@@ -47,6 +48,10 @@ class SeedDeploymentData extends Seeder
         }
         if (file_exists($costos)) {
             $sql = file_get_contents($costos);
+            \DB::unprepared($sql);
+        }
+        if (file_exists($establecimientos)) {
+            $sql = file_get_contents($establecimientos);
             \DB::unprepared($sql);
         }
     }
