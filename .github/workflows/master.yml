@@ -97,6 +97,8 @@ jobs:
       run: composer install --no-progress --prefer-dist --optimize-autoloader
     - name: Prepare Laravel Application
       run: |
+        cp .env.cpanel .env
+        php artisan key:generate
         php artisan optimize
         php artisan icons:cache
         php artisan config:cache
