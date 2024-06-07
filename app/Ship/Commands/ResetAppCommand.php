@@ -69,8 +69,11 @@ class ResetAppCommand extends ConsoleCommand
                 'message' => 'Running optimize clear...',
                 'function' => function () {
                     Artisan::call('optimize:clear -n');
+                    Artisan::call('icons:clear');
                     Artisan::call('config:clear');
                     Artisan::call('cache:clear');
+                    Artisan::call('clear-compiled');
+
                 },
                 'info' => '2. App clear successfully',
             ],
@@ -101,6 +104,15 @@ class ResetAppCommand extends ConsoleCommand
                     Artisan::call('apiato:seed-deploy');
                 },
                 'info' => '6. Seeders de prueba ejecutados.',
+            ],
+            [
+                'message' => 'Running Deploy Seeders........',
+                'function' => function () {
+                    Artisan::call('optimize');
+                    Artisan::call('config:cache');
+                    Artisan::call('icons:cache');
+                },
+                'info' => '7. Seeders de prueba ejecutados.',
             ],
 
         );

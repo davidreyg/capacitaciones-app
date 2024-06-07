@@ -94,7 +94,12 @@ jobs:
           ${{ runner.os }}-composer-
 
     - name: Install Composer dependencies
-      run: composer install --no-progress --prefer-dist --optimize-autoloader
+      run: composer install --no-progress --prefer-dist --optimize-autoloader --no-dev
+    - name: Prepare Laravel Application
+      run: |
+        php artisan optimize
+        php artisan icons:cache
+        php artisan config:cache
     - uses: actions/setup-node@v3.1.1
       with:
         node-version: lts/*
