@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Apiato</title>
+    <title>{{ isset($title) ? $title.' - '.config('app.name') : config('app.name') }}</title>
     <style>
         @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
