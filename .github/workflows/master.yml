@@ -126,4 +126,6 @@ jobs:
         username: capacitaciones@capacitaciones.dirislimasur.gob.pe
         password: Daregu3005
         exclude: |
+          **/vendor/**
           **/.git*/**
+          **/node_modules/**
