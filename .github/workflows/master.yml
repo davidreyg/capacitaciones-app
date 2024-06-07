@@ -99,9 +99,10 @@ jobs:
       run: |
         cp .env.cpanel .env
         php artisan key:generate
-        php artisan optimize
+        php artisan route:cache
+        php artisan view:cache
+        php artisan event:cache
         php artisan icons:cache
-        php artisan config:cache
     - uses: actions/setup-node@v3.1.1
       with:
         node-version: lts/*
