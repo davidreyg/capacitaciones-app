@@ -35,41 +35,52 @@
         </div>
     </x-mary-tab>
     <x-mary-tab name="datos-servir" label="Servir" icon="o-musical-note">
-        <ul>
+        <div class="w-1/2 mx-auto">
             @foreach ($items as $index =>$item)
-            <li>
-                <x-select :label="$item->nombre" placeholder="Seleccione una opción" :options="$item->respuestas"
-                    option-label="nombre" option-value="id"
-                    wire:model.blur="form.capacitacion_item.{{$index}}.respuesta_id">
-                </x-select>
-                @if ($form->capacitacion_item[$index]['respuesta_id'])
-
-                <span>
-                    {{ $item->respuestas->where('id',
-                    $form->capacitacion_item[$index]['respuesta_id'])->first()->pivot->valor }}
-                </span>
-                @endif
-            </li>
-            @endforeach
-        </ul>
-    </x-mary-tab>
-    <x-mary-tab name="datos-costos" label="Costos" icon="o-musical-note">
-        <div class="max-w-lg mx-auto">
-            @foreach ($items as $index =>$item)
-            <div class="p-3 flex items-end justify-between border-t cursor-pointer hover:bg-gray-200">
+            <div class="p-3 flex border-t cursor-pointer">
                 <x-select :label="$item->nombre" placeholder="Seleccione una opción" :options="$item->respuestas"
                     option-label="nombre" option-value="id"
                     wire:model.blur="form.capacitacion_item.{{$index}}.respuesta_id" />
-                @if ($form->capacitacion_item[$index]['respuesta_id'])
+                <div class="flex-shrink w-8 relative">
+                    <x-mary-badge value="{{ $item->respuestas->where('id',
+                        $form->capacitacion_item[$index]['respuesta_id'])->first()?->pivot->valor ?? 0 }}"
+                        label="Valor" class="absolute inset-x-1 inset-y-7 flex badge-warning badge-lg" />
 
-                <x-input value="{{ $item->respuestas->where('id',
-                        $form->capacitacion_item[$index]['respuesta_id'])->first()->pivot->valor }}" label="Valor"
-                    readonly class="input-warning" />
-
-                @endif
+                </div>
             </div>
             @endforeach
 
+        </div>
+    </x-mary-tab>
+    <x-mary-tab name="datos-costos" label="Costos" icon="o-musical-note">
+        <div class="grid grid-cols-1 md:grid-cols-2 sm:grid-cols-2 gap-2">
+            <div class="join flex items-end">
+                <x-select label="Costo" placeholder="Seleccione una opción" :options="$costos" option-label="nombre"
+                    option-value="id" wire:model.defer="costo_id" />
+                <x-button squared primary label="Agregar" class="h-9 join-item rounded-r-full" wire:click="addCosto" />
+            </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-5">
+            @foreach(config('appSection-costo.tipos_costo') as $index => $tipoCosto)
+            <x-card title=" Costos {{$index}}s ">
+                @foreach($form->capacitacion_costo as $selectedCosto)
+                @if ($selectedCosto['tipo'] === $index)
+                <div class="flex items-baseline gap-2">
+                    <x-input label="Costo" class="flex-1" :value="$selectedCosto['nombre']" readonly disabled />
+                    <x-input label="Valor" class="flex-auto"
+                        wire:model.blur="form.capacitacion_costo.{{$selectedCosto['costo_id']}}.valor" />
+                    <div class="flex-shrink w-8 relative">
+                        <x-mary-button wire:click="removeCosto({{ $selectedCosto['costo_id'] }})"
+                            class="absolute inset-x-1 inset-y-3 flex items-center btn-sm btn-circle btn-error"
+                            icon="o-trash" />
+
+                    </div>
+
+                </div>
+                @endif
+                @endforeach
+            </x-card>
+            @endforeach
         </div>
     </x-mary-tab>
 </x-mary-tabs>

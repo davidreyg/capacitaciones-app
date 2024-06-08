@@ -3,6 +3,7 @@
 namespace App\Containers\AppSection\Capacitacion\UI\WEB\Components;
 
 use App\Containers\AppSection\Capacitacion\UI\WEB\Forms\CapacitacionForm;
+use App\Containers\AppSection\Costo\Models\Costo;
 use App\Containers\AppSection\EjeTematico\Models\EjeTematico;
 use App\Containers\AppSection\Item\Models\Item;
 use App\Containers\AppSection\Modalidad\Models\Modalidad;
@@ -23,7 +24,9 @@ class CapacitacionCreate extends Component
     public $modalidades;
     public $niveles;
     public $items;
+    public $costos;
     public $selected_tab;
+    public $costo_id;
 
     public function mount()
     {
@@ -34,15 +37,50 @@ class CapacitacionCreate extends Component
         $this->modalidades = Modalidad::get();
         $this->niveles = Nivel::get();
         $this->items = Item::with('respuestas')->get();
+        $this->costos = Costo::get();
         $this->form->fecha_inicio = now()->toDateString();
         $this->form->fecha_fin = now()->addDay()->toDateString();
         $this->form->capacitacion_item = $this->items->map(function ($item) {
             return [
                 'item_id' => $item->id,
-                'respuesta_id' => null, // Asumiendo que quieres preseleccionar la primera respuesta
+                'respuesta_id' => null, // Asumiendo que quieres preseleccionar la primera costo
             ];
         })->toArray();
     }
+
+    public function addCosto()
+    {
+        $costo = Costo::find($this->costo_id);
+        if (!$costo) {
+            Notification::make()
+                ->title('No selecciono costo.')
+                ->danger()
+                ->send();
+            return;
+        }
+
+        if (!in_array($costo->id, array_column($this->form->capacitacion_costo, 'costo_id'))) {
+            $this->form->capacitacion_costo[$costo->id] = [
+                'costo_id' => $costo->id,
+                'nombre' => $costo->nombre,
+                'tipo' => $costo->tipo,
+                'valor' => null
+            ];
+            $this->costo_id = null;
+        } else {
+            Notification::make()
+                ->title('Ya has agregado este elemento.')
+                ->warning()
+                ->send();
+            return;
+        }
+    }
+
+    public function removeCosto($costo_id)
+    {
+        unset($this->form->capacitacion_costo[$costo_id]);
+    }
+
 
     public function save()
     {

@@ -2,6 +2,7 @@
 
 namespace App\Containers\AppSection\Capacitacion\Models;
 
+use App\Containers\AppSection\Costo\Models\Costo;
 use App\Containers\AppSection\Item\Models\Item;
 use App\Containers\AppSection\Nivel\Models\Nivel;
 use App\Ship\Parents\Models\Model as ParentModel;
@@ -38,5 +39,11 @@ class Capacitacion extends ParentModel
     {
         return $this->belongsToMany(Item::class)
             ->withPivot(['respuesta_id']);
+    }
+
+    public function costos()
+    {
+        return $this->belongsToMany(Costo::class)
+            ->withPivot(['valor']);
     }
 }

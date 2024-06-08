@@ -3,6 +3,7 @@
 namespace App\Containers\AppSection\Capacitacion\UI\WEB\Forms;
 
 use App\Containers\AppSection\Capacitacion\Models\Capacitacion;
+use App\Containers\AppSection\Costo\Models\Costo;
 use App\Containers\AppSection\Item\Models\Item;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\Validate;
@@ -46,6 +47,8 @@ class CapacitacionForm extends Form
 
     #[Validate]
     public $capacitacion_item = [];
+    #[Validate]
+    public $capacitacion_costo = [];
 
     public function setCapacitacion(?Capacitacion $capacitacion)
     {
@@ -71,6 +74,16 @@ class CapacitacionForm extends Form
                 'respuesta_id' => $item->pivot->respuesta_id,
             ];
         })->toArray();
+        $this->capacitacion_costo = $capacitacion->costos->mapWithKeys(function (Costo $costo) {
+            return [
+                $costo->pivot->costo_id => [
+                    'costo_id' => $costo->pivot->costo_id,
+                    'nombre' => $costo->nombre,
+                    'tipo' => $costo->tipo,
+                    'valor' => $costo->pivot->valor,
+                ]
+            ];
+        })->toArray();
     }
 
     public function rules()
@@ -87,7 +100,8 @@ class CapacitacionForm extends Form
             'fecha_inicio' => [
                 'required',
                 'date',
-                'after_or_equal:now'
+                'date_format:Y-m-d',
+                'after_or_equal:' . now()->format('Y-m-d')
             ],
             'fecha_fin' => [
                 'required',
@@ -157,6 +171,18 @@ class CapacitacionForm extends Form
             'capacitacion_item.*.respuesta_id' => [
                 'required',
             ],
+            'capacitacion_costo' => [
+                'nullable',
+                'array',
+            ],
+            'capacitacion_costo.*.costo_id' => [
+                'required',
+            ],
+            'capacitacion_costo.*.valor' => [
+                'required',
+                'integer',
+                'min:0',
+            ],
         ];
         // Condición para agregar la regla unique
         if (isset($this->capacitacion)) {
@@ -173,6 +199,8 @@ class CapacitacionForm extends Form
             $this->validate();
             $capacitacion = Capacitacion::create($this->all());
             $capacitacion->nivels()->sync($this->nivel_ids);
+
+            /* ITEMS */
             // Preparar datos para sincronización
             $syncData = [];
             foreach ($this->capacitacion_item as $item) {
@@ -180,6 +208,15 @@ class CapacitacionForm extends Form
             }
             // Sincronizar respuestas y valores
             $capacitacion->items()->sync($syncData);
+
+            /* COSTOS */
+            // Preparar datos para sincronización
+            $costoPivot = [];
+            foreach ($this->capacitacion_costo as $costo) {
+                $costoPivot[$costo['costo_id']] = ['valor' => $costo['valor']];
+            }
+            // Sincronizar respuestas y valores
+            $capacitacion->costos()->sync($costoPivot);
             $this->reset();
         });
     }
@@ -190,6 +227,7 @@ class CapacitacionForm extends Form
             $this->validate();
             $this->capacitacion->update($this->all());
             $this->capacitacion->nivels()->sync($this->nivel_ids);
+            /* ITEMS */
             // Preparar datos para sincronización
             $syncData = [];
             foreach ($this->capacitacion_item as $item) {
@@ -197,6 +235,15 @@ class CapacitacionForm extends Form
             }
             // Sincronizar respuestas y valores
             $this->capacitacion->items()->sync($syncData);
+
+            /* COSTOS */
+            // Preparar datos para sincronización
+            $costoPivot = [];
+            foreach ($this->capacitacion_costo as $costo) {
+                $costoPivot[$costo['costo_id']] = ['valor' => $costo['valor']];
+            }
+            // Sincronizar respuestas y valores
+            $this->capacitacion->costos()->sync($costoPivot);
             $this->reset();
         });
     }
