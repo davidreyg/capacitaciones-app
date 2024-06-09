@@ -4,6 +4,7 @@ namespace App\Containers\AppSection\Capacitacion\Traits;
 
 use App\Containers\AppSection\Costo\Models\Costo;
 use App\Containers\AppSection\EjeTematico\Models\EjeTematico;
+use App\Containers\AppSection\Establecimiento\Models\Establecimiento;
 use App\Containers\AppSection\Item\Models\Item;
 use App\Containers\AppSection\Modalidad\Models\Modalidad;
 use App\Containers\AppSection\Nivel\Models\Nivel;
@@ -55,6 +56,12 @@ trait CapacitacionComputedAttributesTrait
     public function costos()
     {
         return Costo::get();
+    }
+
+    #[Computed]
+    public function establecimientos()
+    {
+        return Establecimiento::get();
     }
 
     public function addCosto()

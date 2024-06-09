@@ -4,6 +4,7 @@ namespace App\Containers\AppSection\Capacitacion\UI\WEB\Forms;
 
 use App\Containers\AppSection\Capacitacion\Models\Capacitacion;
 use App\Containers\AppSection\Costo\Models\Costo;
+use App\Containers\AppSection\Establecimiento\Models\Establecimiento;
 use App\Containers\AppSection\Item\Models\Item;
 use App\Containers\AppSection\Respuesta\Models\Respuesta;
 use Illuminate\Validation\Rule;
@@ -53,6 +54,8 @@ class CapacitacionForm extends Form
     public $capacitacion_item = [];
     #[Validate]
     public $capacitacion_costo = [];
+    #[Validate]
+    public $capacitacion_establecimiento = [];
 
     public function setCapacitacion(?Capacitacion $capacitacion)
     {
@@ -99,6 +102,15 @@ class CapacitacionForm extends Form
                     'nombre' => $costo->nombre,
                     'tipo' => $costo->tipo,
                     'valor' => $costo->pivot->valor,
+                ]
+            ];
+        })->toArray();
+        $this->capacitacion_establecimiento = $capacitacion->establecimientos->mapWithKeys(function (Establecimiento $establecimiento) {
+            return [
+                $establecimiento->pivot->establecimiento_id => [
+                    'establecimiento_id' => $establecimiento->pivot->establecimiento_id,
+                    'nombre' => $establecimiento->nombre,
+                    'estado' => $establecimiento->pivot->estado,
                 ]
             ];
         })->toArray();
@@ -209,6 +221,16 @@ class CapacitacionForm extends Form
                 'integer',
                 'min:0',
             ],
+            'capacitacion_establecimiento' => [
+                'required',
+                'array',
+            ],
+            'capacitacion_establecimiento.*.establecimiento_id' => [
+                'required',
+            ],
+            'capacitacion_establecimiento.*.estado' => [
+                'required',
+            ],
         ];
         // Condición para agregar la regla unique
         if (isset($this->capacitacion)) {
@@ -249,6 +271,15 @@ class CapacitacionForm extends Form
             }
             // Sincronizar respuestas y valores
             $capacitacion->costos()->sync($costoPivot);
+
+            /* ESTABLECIMIENTOS */
+            // Preparar datos para sincronización
+            $establecimientoPivot = [];
+            foreach ($this->capacitacion_establecimiento as $establecimiento) {
+                $establecimientoPivot[$establecimiento['establecimiento_id']] = ['estado' => $establecimiento['estado']];
+            }
+            // Sincronizar respuestas y valores
+            $capacitacion->establecimientos()->sync($establecimientoPivot);
             $this->reset();
         });
     }
@@ -276,6 +307,15 @@ class CapacitacionForm extends Form
             }
             // Sincronizar respuestas y valores
             $this->capacitacion->costos()->sync($costoPivot);
+
+            /* ESTABLECIMIENTOS */
+            // Preparar datos para sincronización
+            $establecimientoPivot = [];
+            foreach ($this->capacitacion_establecimiento as $establecimiento) {
+                $establecimientoPivot[$establecimiento['establecimiento_id']] = ['estado' => $establecimiento['estado']];
+            }
+            // Sincronizar respuestas y valores
+            $this->capacitacion->establecimientos()->sync($establecimientoPivot);
             $this->reset();
         });
     }

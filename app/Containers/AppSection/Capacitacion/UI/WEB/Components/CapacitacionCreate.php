@@ -2,6 +2,7 @@
 
 namespace App\Containers\AppSection\Capacitacion\UI\WEB\Components;
 
+use App\Containers\AppSection\Capacitacion\Traits\ManageEstablecimientosTrait;
 use App\Containers\AppSection\Capacitacion\UI\WEB\Forms\CapacitacionForm;
 use App\Containers\AppSection\Capacitacion\Traits\CapacitacionComputedAttributesTrait;
 use App\Containers\AppSection\Item\Models\Item;
@@ -13,7 +14,7 @@ use Livewire\Component;
 #[Title('Capacitaciones')]
 class CapacitacionCreate extends Component
 {
-    use CapacitacionComputedAttributesTrait;
+    use CapacitacionComputedAttributesTrait, ManageEstablecimientosTrait;
     public CapacitacionForm $form;
 
     public $selected_tab;

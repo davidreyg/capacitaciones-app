@@ -99,18 +99,35 @@
             @endforeach
         </div>
     </x-mary-tab>
-</x-mary-tabs>
+    <x-mary-tab name="datos-establecimientos" label="Establecimientos" icon="o-musical-note" class="disabled">
+        <div class="grid grid-cols-1 md:grid-cols-2 sm:grid-cols-2 gap-2">
+            <div class="join flex items-end">
+                <x-select label="Establecimiento" placeholder="Seleccione una opción" :options="$this->establecimientos"
+                    option-label="nombre" option-value="id" wire:model.defer="establecimiento_id" />
+                <x-button squared primary label="Agregar" class="h-9 join-item rounded-r-full"
+                    wire:click="addEstablecimiento" spinner="addEstablecimiento" />
+            </div>
+        </div>
+        @foreach ($form->capacitacion_establecimiento as $establecimiento)
+        <x-mary-list-item :item="$establecimiento" no-separator no-hover class="mt-5">
+            <x-slot:avatar>
+                <x-mary-button @class(['btn-circle btn-outline
+                    btn-sm',config('appSection-capacitacion.estado_establecimiento.'.$establecimiento['estado'].'.mary_classes')])
+                    icon="{{config('appSection-capacitacion.estado_establecimiento.'.$establecimiento['estado'].'.mary_icon')}}"
+                    wire:click="cambiarEstado('{{$establecimiento['establecimiento_id']}}')"
+                    spinner="cambiarEstado('{{$establecimiento['establecimiento_id']}}')" />
+            </x-slot:avatar>
+            <x-slot:value>
+                {{$establecimiento['nombre']}} - {{$establecimiento['estado']}}
+            </x-slot:value>
 
-@script
-<script>
-    Alpine.data('counter', () => {
-        return {
-            count: 0,
-            increment() {
-                console.log($wire.form.capacitacion_item)
-                this.count++
-            },
-        }
-    })
-</script>
-@endscript
+            <x-slot:actions>
+
+                <x-mary-button icon="o-trash" class="btn-circle btn-outline
+                    btn-sm btn-error" wire:click="removeEstablecimiento({{$establecimiento['establecimiento_id']}})"
+                    spinner="removeEstablecimiento({{$establecimiento['establecimiento_id']}})" />
+            </x-slot:actions>
+        </x-mary-list-item>
+        @endforeach
+    </x-mary-tab>
+</x-mary-tabs>

@@ -4,6 +4,7 @@ namespace App\Containers\AppSection\Capacitacion\UI\WEB\Components;
 
 use App\Containers\AppSection\Capacitacion\Models\Capacitacion;
 use App\Containers\AppSection\Capacitacion\Traits\CapacitacionComputedAttributesTrait;
+use App\Containers\AppSection\Capacitacion\Traits\ManageEstablecimientosTrait;
 use App\Containers\AppSection\Capacitacion\UI\WEB\Forms\CapacitacionForm;
 use Filament\Notifications\Notification;
 use Livewire\Attributes\Title;
@@ -12,7 +13,7 @@ use Livewire\Component;
 #[Title('Capacitaciones')]
 class CapacitacionEdit extends Component
 {
-    use CapacitacionComputedAttributesTrait;
+    use CapacitacionComputedAttributesTrait, ManageEstablecimientosTrait;
     public CapacitacionForm $form;
 
     public $selected_tab;

@@ -3,6 +3,7 @@
 namespace App\Containers\AppSection\Capacitacion\Models;
 
 use App\Containers\AppSection\Costo\Models\Costo;
+use App\Containers\AppSection\Establecimiento\Models\Establecimiento;
 use App\Containers\AppSection\Item\Models\Item;
 use App\Containers\AppSection\Nivel\Models\Nivel;
 use App\Ship\Parents\Models\Model as ParentModel;
@@ -51,5 +52,11 @@ class Capacitacion extends ParentModel
     {
         return $this->belongsToMany(Costo::class)
             ->withPivot(['valor']);
+    }
+
+    public function establecimientos()
+    {
+        return $this->belongsToMany(Establecimiento::class)
+            ->withPivot(['estado']);
     }
 }
