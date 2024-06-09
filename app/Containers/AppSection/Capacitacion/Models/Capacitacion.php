@@ -24,6 +24,12 @@ class Capacitacion extends ParentModel
         'eje_tematico_id',
         'modalidad_id',
         'oportunidad_id',
+        'is_libre',
+        'vacantes',
+    ];
+
+    protected $casts = [
+        'is_libre' => 'boolean',
     ];
     /**
      * A resource key to be used in the serialized responses.

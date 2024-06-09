@@ -19,6 +19,8 @@ return new class () extends Migration {
             $table->tinyInteger('creditos')->unsigned();
             $table->tinyInteger('numero_horas')->unsigned();
             $table->tinyText('problema');
+            $table->boolean('is_libre');
+            $table->integer('vacantes')->unsigned();
             // RELACIONES
             $table->foreignId('tipo_capacitacion_id')->constrained();
             $table->foreignId('eje_tematico_id')->constrained();

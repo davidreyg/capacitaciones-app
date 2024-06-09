@@ -1,5 +1,8 @@
 <div>
-   <x-mary-header title="Nuevo Capacitacion" subtitle="" size="text-xl" separator>
+   <x-mary-header title="Nueva Capacitacion" subtitle="" size="text-xl" separator>
+      <x-slot:actions>
+         <x-mary-button icon="o-funnel" label="Clonar" />
+      </x-slot:actions>
    </x-mary-header>
    <x-mary-form wire:submit="save">
       @include('appSection@capacitacion::partials.capacitacion-form')

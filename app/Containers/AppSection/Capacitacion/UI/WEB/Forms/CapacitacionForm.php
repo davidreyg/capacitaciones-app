@@ -5,6 +5,7 @@ namespace App\Containers\AppSection\Capacitacion\UI\WEB\Forms;
 use App\Containers\AppSection\Capacitacion\Models\Capacitacion;
 use App\Containers\AppSection\Costo\Models\Costo;
 use App\Containers\AppSection\Item\Models\Item;
+use App\Containers\AppSection\Respuesta\Models\Respuesta;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
@@ -31,7 +32,6 @@ class CapacitacionForm extends Form
     public $oportunidad_id;
     #[Validate]
     public $nivel_ids = [];
-    /** NIVELES FALTA */
     #[Validate]
     public $perfil;
     #[Validate]
@@ -44,6 +44,10 @@ class CapacitacionForm extends Form
     public $creditos;
     #[Validate]
     public $problema;
+    #[Validate]
+    public $is_libre;
+    #[Validate]
+    public $vacantes;
 
     #[Validate]
     public $capacitacion_item = [];
@@ -68,10 +72,24 @@ class CapacitacionForm extends Form
         $this->numero_horas = $capacitacion->numero_horas;
         $this->creditos = $capacitacion->creditos;
         $this->problema = $capacitacion->problema;
-        $this->capacitacion_item = $capacitacion->items->map(function (Item $item) {
+        $this->is_libre = $capacitacion->is_libre;
+        $this->vacantes = $capacitacion->vacantes;
+        $this->capacitacion_item = $capacitacion->items->mapWithKeys(function (Item $item) {
             return [
-                'item_id' => $item->pivot->item_id,
-                'respuesta_id' => $item->pivot->respuesta_id,
+                $item->id => [
+                    'item_id' => $item->id,
+                    'respuesta_id' => $item->pivot->respuesta_id,
+                    'nombre' => $item->nombre,
+                    'respuestas' => $item->respuestas->mapWithKeys(function (Respuesta $respuesta) {
+                        return [
+                            $respuesta->id => [
+                                'id' => $respuesta->id,
+                                'nombre' => $respuesta->nombre,
+                                'valor' => $respuesta->pivot->valor,
+                            ]
+                        ];
+                    })->toArray()
+                ]
             ];
         })->toArray();
         $this->capacitacion_costo = $capacitacion->costos->mapWithKeys(function (Costo $costo) {
@@ -161,6 +179,14 @@ class CapacitacionForm extends Form
                 'string',
                 'max:255',
             ],
+            'is_libre' => [
+                'required',
+                'boolean',
+            ],
+            'vacantes' => [
+                Rule::requiredIf(!$this->is_libre),
+                'integer',
+            ],
             'capacitacion_item' => [
                 'required',
                 'array',
@@ -190,14 +216,20 @@ class CapacitacionForm extends Form
         } else {
             $rules['codigo'][] = Rule::unique('capacitacions');
         }
+
+        if ($this->is_libre) {
+            $rules['vacantes'][] = 'min:0';
+        } else {
+            $rules['vacantes'][] = 'min:1';
+        }
         return $rules;
     }
 
     public function store()
     {
         return \DB::transaction(function () {
-            $this->validate();
-            $capacitacion = Capacitacion::create($this->all());
+            $validated = $this->validate();
+            $capacitacion = Capacitacion::create($validated);
             $capacitacion->nivels()->sync($this->nivel_ids);
 
             /* ITEMS */
@@ -224,8 +256,8 @@ class CapacitacionForm extends Form
     public function update()
     {
         return \DB::transaction(function () {
-            $this->validate();
-            $this->capacitacion->update($this->all());
+            $validated = $this->validate();
+            $this->capacitacion->update($validated);
             $this->capacitacion->nivels()->sync($this->nivel_ids);
             /* ITEMS */
             // Preparar datos para sincronización
