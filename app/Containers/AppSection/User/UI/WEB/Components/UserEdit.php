@@ -4,12 +4,14 @@ namespace App\Containers\AppSection\User\UI\WEB\Components;
 
 use App\Containers\AppSection\Establecimiento\Models\Establecimiento;
 use App\Containers\AppSection\User\Models\User;
+use App\Containers\AppSection\User\Traits\UserComputedAttributesTrait;
 use App\Containers\AppSection\User\UI\WEB\Forms\UserForm;
 use Filament\Notifications\Notification;
 use Livewire\Component;
 
 class UserEdit extends Component
 {
+    use UserComputedAttributesTrait;
     public UserForm $form;
     public $establecimientos;
     public $selectedTab = 'privilegios-tab';

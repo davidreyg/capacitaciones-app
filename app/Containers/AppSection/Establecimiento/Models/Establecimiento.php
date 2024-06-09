@@ -2,6 +2,7 @@
 
 namespace App\Containers\AppSection\Establecimiento\Models;
 
+use App\Containers\AppSection\Capacitacion\Models\Capacitacion;
 use App\Containers\AppSection\User\Models\User;
 use App\Ship\Parents\Models\Model as ParentModel;
 
@@ -35,5 +36,11 @@ class Establecimiento extends ParentModel
     public function users()
     {
         return $this->hasMany(User::class);
+    }
+
+    public function capacitaciones()
+    {
+        return $this->belongsToMany(Capacitacion::class)
+            ->withPivot(['estado']);
     }
 }

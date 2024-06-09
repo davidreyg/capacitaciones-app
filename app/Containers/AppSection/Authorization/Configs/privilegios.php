@@ -9,8 +9,14 @@ return [
             [
                 'nombre' => 'Registrar Capacitacion',
                 'icono' => 'fas fa-stethoscope',
-                'ruta' => '/capacitaciones/matricula',
-                'slug' => 'registrar',
+                'ruta' => '/registrar-capacitacion',
+                'slug' => 'registrar-capacitacion',
+            ],
+            [
+                'nombre' => 'Habilitar Capacitaciones',
+                'icono' => 'fas fa-stethoscope',
+                'ruta' => '/habilitar-capacitaciones',
+                'slug' => 'habilitar-capacitaciones',
             ],
             [
                 'nombre' => 'Buscar Capacitacion',

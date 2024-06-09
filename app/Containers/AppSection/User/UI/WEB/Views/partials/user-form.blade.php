@@ -5,4 +5,6 @@
     <x-input label="Nombre Completo" wire:model.blur="form.nombre_completo" />
     <x-input label="Cargo" wire:model.blur="form.cargo" />
     <x-inputs.password label="Passowrd" wire:model.blur="form.password" />
+    <x-select label="Roles" placeholder="Seleccione una opción" :options="$this->roles" option-label="name"
+        option-value="id" wire:model.blur="form.role_ids" multiselect />
 </div>

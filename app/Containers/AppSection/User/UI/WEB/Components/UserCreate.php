@@ -2,20 +2,15 @@
 
 namespace App\Containers\AppSection\User\UI\WEB\Components;
 
+use App\Containers\AppSection\User\Traits\UserComputedAttributesTrait;
 use App\Containers\AppSection\User\UI\WEB\Forms\UserForm;
 use App\Containers\AppSection\Establecimiento\Models\Establecimiento;
-use App\Containers\AppSection\User\Models\User;
-use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Livewire\Component;
 
 class UserCreate extends Component
 {
+    use UserComputedAttributesTrait;
     public UserForm $form;
     public $establecimientos;
 

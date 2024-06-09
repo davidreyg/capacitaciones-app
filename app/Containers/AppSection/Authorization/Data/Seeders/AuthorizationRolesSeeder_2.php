@@ -17,6 +17,7 @@ class AuthorizationRolesSeeder_2 extends ParentSeeder
         foreach (array_keys(config('auth.guards')) as $guardName) {
             $task->run(config('appSection-authorization.admin_role'), 'Administrator', 'Super Administrador', $guardName);
             $task->run('medico', 'Medico', 'Medico', $guardName);
+            $task->run('ris', 'Admin RIS', 'Administrador de RIS', $guardName);
         }
     }
 }

@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('capacitaciones/create', CapacitacionCreate::class)
     ->middleware(['auth:web']);
 
-// FIXME: ?????
-Route::get('capacitaciones/matricula', CapacitacionCreate::class)
+Route::get('registrar-capacitacion', CapacitacionCreate::class)
     ->middleware(['auth:web']);
 

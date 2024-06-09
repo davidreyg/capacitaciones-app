@@ -25,6 +25,9 @@ class UserForm extends Form
     #[Validate]
     public $establecimiento_id;
 
+    #[Validate]
+    public $role_ids = [];
+
     public function setUser(?User $user)
     {
         $this->user = $user;
@@ -32,6 +35,7 @@ class UserForm extends Form
         $this->nombre_completo = $user->nombre_completo;
         $this->cargo = $user->cargo;
         $this->establecimiento_id = $user->establecimiento_id;
+        $this->role_ids = $user->roles()->pluck('id')->toArray();
     }
 
     public function rules()
@@ -57,6 +61,14 @@ class UserForm extends Form
                 'required',
                 'exists:establecimientos,id',
             ],
+            'role_ids' => [
+                'required',
+                'array',
+            ],
+            'role_ids.*' => [
+                'required',
+                'exists:roles,id',
+            ],
         ];
 
         return $rules;
@@ -64,15 +76,21 @@ class UserForm extends Form
 
     public function store()
     {
-        $this->validate();
-        User::create($this->all());
-        $this->reset();
+        return \DB::transaction(function () {
+            $validated = $this->validate();
+            $user = User::create($validated);
+            $user->syncRoles($this->role_ids);
+            $this->reset();
+        });
     }
 
     public function update()
     {
-        $this->validate();
-        $this->user->update($this->all());
-        $this->reset();
+        return \DB::transaction(function () {
+            $validated = $this->validate();
+            $this->user->update($validated);
+            $this->user->syncRoles($this->role_ids);
+            $this->reset();
+        });
     }
 }
