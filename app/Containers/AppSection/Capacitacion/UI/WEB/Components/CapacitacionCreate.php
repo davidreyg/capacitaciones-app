@@ -30,7 +30,14 @@ class CapacitacionCreate extends Component
 
     public function clonarCapacitacion(Capacitacion $capacitacion)
     {
-        $this->form->setCapacitacion($capacitacion);
+        $this->form->reset();
+        $this->form->setCapacitacion($capacitacion, true);
+        $this->form->resetValidation();
+        Notification::make()
+            ->title('Clonado correctamente.')
+            ->success()
+            ->seconds(2)
+            ->send();
         $this->modalClonar = !$this->modalClonar;
     }
 

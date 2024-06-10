@@ -6,6 +6,3 @@ use Illuminate\Support\Facades\Route;
 Route::get('capacitaciones/create', CapacitacionCreate::class)
     ->middleware(['auth:web']);
 
-Route::get('registrar-capacitacion', CapacitacionCreate::class)
-    ->middleware(['auth:web']);
-

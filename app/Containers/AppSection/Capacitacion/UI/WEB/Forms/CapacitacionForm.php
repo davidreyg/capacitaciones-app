@@ -58,7 +58,7 @@ class CapacitacionForm extends Form
     #[Validate]
     public $capacitacion_establecimiento = [];
 
-    public function setCapacitacion(?Capacitacion $capacitacion)
+    public function setCapacitacion(?Capacitacion $capacitacion, bool $isClone = false)
     {
         $this->capacitacion = $capacitacion;
         $this->codigo = $capacitacion->codigo;
@@ -106,15 +106,18 @@ class CapacitacionForm extends Form
                 ]
             ];
         })->toArray();
-        $this->capacitacion_establecimiento = $capacitacion->establecimientos->mapWithKeys(function (Establecimiento $establecimiento) {
-            return [
-                $establecimiento->pivot->establecimiento_id => [
-                    'establecimiento_id' => $establecimiento->pivot->establecimiento_id,
-                    'nombre' => $establecimiento->nombre,
-                    'estado' => $establecimiento->pivot->estado,
-                ]
-            ];
-        })->toArray();
+
+        if (!$isClone) {
+            $this->capacitacion_establecimiento = $capacitacion->establecimientos->mapWithKeys(function (Establecimiento $establecimiento) {
+                return [
+                    $establecimiento->pivot->establecimiento_id => [
+                        'establecimiento_id' => $establecimiento->pivot->establecimiento_id,
+                        'nombre' => $establecimiento->nombre,
+                        'estado' => $establecimiento->pivot->estado,
+                    ]
+                ];
+            })->toArray();
+        }
     }
 
     public function rules()

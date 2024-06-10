@@ -8,16 +8,18 @@
    <x-mary-form wire:submit="save">
       @include('appSection@capacitacion::partials.capacitacion-form')
       <x-slot:actions>
+         @section('actions')
          <x-mary-button label="Cancelar" icon="tabler.circle-x" link="/capacitaciones" class="btn-sm" />
          <x-mary-button label="Guardar" icon="tabler.device-floppy" type="submit" spinner="save"
             class="btn-sm btn-primary" />
+         @show
       </x-slot:actions>
    </x-mary-form>
-   <x-modal wire:model="modalClonar">
+   <x-modal wire:model="modalClonar" blur>
       <x-mary-card title="Clonar Capacitación" separator progress-indicator="clonarCapacitacion" class="w-full">
          <livewire:capacitacion-capacitacion-table :custom-actions="true"
             @capacitacionTableSelected="clonarCapacitacion($event.detail.capacitacion)">
 
-            </x-card>
+      </x-mary-card>
    </x-modal>
 </div>

@@ -1,3 +1,4 @@
+<x-errors />
 <x-mary-tabs wire:model="selected_tab">
     <x-mary-tab name="datos-generales" label="Datos Generales" icon="o-users">
         <x-card title="Tipo de capacitacion">
