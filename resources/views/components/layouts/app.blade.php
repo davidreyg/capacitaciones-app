@@ -24,7 +24,7 @@
             </label>
 
             {{-- Brand --}}
-            <div>Sistema de Capacitaciones</div>
+            <div>Sistema de Capacitaciones - {{auth()->user()->establecimiento->nombre}}</div>
         </x-slot:brand>
 
         {{-- Right side actions --}}

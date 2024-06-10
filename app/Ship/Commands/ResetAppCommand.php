@@ -73,6 +73,7 @@ class ResetAppCommand extends ConsoleCommand
                     Artisan::call('config:clear');
                     Artisan::call('cache:clear');
                     Artisan::call('clear-compiled');
+                    Artisan::call('filament:clear-cached-components');
 
                 },
                 'info' => '2. App clear successfully',
@@ -106,11 +107,12 @@ class ResetAppCommand extends ConsoleCommand
                 'info' => '6. Seeders de prueba ejecutados.',
             ],
             [
-                'message' => 'Running Deploy Seeders........',
+                'message' => 'Cache!',
                 'function' => function () {
                     Artisan::call('optimize');
                     Artisan::call('config:cache');
                     Artisan::call('icons:cache');
+                    Artisan::call('filament:cache-components');
                 },
                 'info' => '7. Seeders de prueba ejecutados.',
             ],

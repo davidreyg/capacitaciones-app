@@ -7,6 +7,12 @@ return [
         'slug' => 'gestionar',
         'children' => [
             [
+                'nombre' => 'Buscar Capacitaciones',
+                'icono' => 'o-magnifying-glass',
+                'ruta' => '/buscar-capacitaciones',
+                'slug' => 'buscar-capacitaciones',
+            ],
+            [
                 'nombre' => 'Registrar Capacitacion',
                 'icono' => 'fas fa-stethoscope',
                 'ruta' => '/registrar-capacitacion',
@@ -17,12 +23,6 @@ return [
                 'icono' => 'fas fa-stethoscope',
                 'ruta' => '/habilitar-capacitaciones',
                 'slug' => 'habilitar-capacitaciones',
-            ],
-            [
-                'nombre' => 'Buscar Capacitacion',
-                'icono' => 'o-magnifying-glass',
-                'ruta' => '/diagnosticos/formulario',
-                'slug' => 'formulario',
             ],
         ],
     ],

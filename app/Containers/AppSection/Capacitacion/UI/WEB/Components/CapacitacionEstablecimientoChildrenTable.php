@@ -7,10 +7,14 @@ use App\Containers\AppSection\Establecimiento\Models\Establecimiento;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Tables\Actions\Action;
+use Filament\Tables\Actions\BulkAction;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Livewire\Component;
 
@@ -21,9 +25,9 @@ class CapacitacionEstablecimientoChildrenTable extends Component implements HasF
 
     public Establecimiento $establecimiento;
 
-    public function mount(Establecimiento $establecimiento)
+    public function mount(Establecimiento $establecimientoId)
     {
-        $this->establecimiento = $establecimiento;
+        $this->establecimiento = $establecimientoId;
     }
 
     public function table(Table $table): Table
@@ -43,10 +47,27 @@ class CapacitacionEstablecimientoChildrenTable extends Component implements HasF
                     ->label('Habilitar')
                     ->icon(config('appSection-capacitacion.estado_establecimiento.HABILITADO.filament_icon'))
                     ->color('success')
+                    ->requiresConfirmation()
                     ->action(function (Capacitacion $record) {
                         $record->establecimientos()->updateExistingPivot($this->establecimiento->id, ['estado' => config('appSection-capacitacion.estado_establecimiento.HABILITADO.nombre')]);
                     })
-            ]);
+            ])->bulkActions([
+                    BulkActionGroup::make([
+                        BulkAction::make('habilitar2')
+                            ->label('Habilitar todos')
+                            ->icon(config('appSection-capacitacion.estado_establecimiento.HABILITADO.filament_icon'))
+                            ->color('success')
+                            ->action(function (Collection $collection) {
+                                foreach ($collection as $value) {
+                                    $value->establecimientos()->updateExistingPivot($this->establecimiento->id, ['estado' => config('appSection-capacitacion.estado_establecimiento.HABILITADO.nombre')]);
+                                }
+                            })
+                            ->requiresConfirmation()
+                            ->deselectRecordsAfterCompletion()
+                            ->databaseTransaction(),
+                    ]),
+                ])
+            ->deferLoading();
     }
 
     public function render()

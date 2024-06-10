@@ -10,9 +10,8 @@ use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
-use Filament\Tables\Filters\QueryBuilder;
-use Filament\Tables\Filters\QueryBuilder\Constraints\DateConstraint;
 use Filament\Tables\Table;
+use Illuminate\Support\HtmlString;
 use Illuminate\View\View;
 use Livewire\Component;
 
@@ -25,7 +24,9 @@ class CapacitacionEstablecimientoTable extends Component implements HasForms, Ha
 
     public function mount()
     {
-        $this->establecimiento_ids = auth()->user()->establecimiento->childrenAndSelf()->pluck('id')->toArray();
+        $this->establecimiento_ids = auth()->user()->establecimiento->tipo === config('appSection-establecimiento.tipo_establecimiento.RIS')
+            ? auth()->user()->establecimiento->children()->pluck('id')->toArray()
+            : auth()->user()->establecimiento->childrenAndSelf()->pluck('id')->toArray();
     }
 
     public function table(Table $table): Table
@@ -45,17 +46,14 @@ class CapacitacionEstablecimientoTable extends Component implements HasForms, Ha
                 TextColumn::make('capacitacions_count')->label('N° Capacitaciones'),
             ])
             ->filters([
-                QueryBuilder::make()->constraints([DateConstraint::make('fecha_inicio')->relationship('capacitacions', 'fecha_inicio')]),
             ])
             ->actions([
                 Action::make('detalle')
                     ->label('Ver')
                     ->modalHeading('Capacitaciones del establecimiento')
                     ->modalContent(
-                        fn(Establecimiento $record): View => view(
-                            'appSection@capacitacion::partials.capacitacion-children-table',
-                            ['establecimiento' => $record],
-                        )
+                        fn(Establecimiento $record) =>
+                        new HtmlString(\Blade::render("@livewire('capacitacion-capacitacion-establecimiento-children-table', ['establecimientoId' => {$record['id']}])"))
                     )
                     ->modalSubmitAction(false)
                     ->modalCancelAction(false)
