@@ -22,6 +22,7 @@ class CapacitacionEdit extends Component
     public function mount(Capacitacion $capacitacion)
     {
         $this->selected_tab = 'datos-generales';
+        $this->form->is_edit = true;
         $this->form->setCapacitacion($capacitacion);
     }
 

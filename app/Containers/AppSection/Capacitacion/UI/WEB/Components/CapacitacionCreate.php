@@ -2,6 +2,7 @@
 
 namespace App\Containers\AppSection\Capacitacion\UI\WEB\Components;
 
+use App\Containers\AppSection\Capacitacion\Models\Capacitacion;
 use App\Containers\AppSection\Capacitacion\Traits\ManageEstablecimientosTrait;
 use App\Containers\AppSection\Capacitacion\UI\WEB\Forms\CapacitacionForm;
 use App\Containers\AppSection\Capacitacion\Traits\CapacitacionComputedAttributesTrait;
@@ -19,12 +20,31 @@ class CapacitacionCreate extends Component
 
     public $selected_tab;
     public $costo_id;
+    public $modalClonar;
 
     public function mount()
     {
         $this->selected_tab = 'datos-generales';
+        $this->initialFormData();
+    }
+
+    public function clonarCapacitacion(Capacitacion $capacitacion)
+    {
+        $this->form->setCapacitacion($capacitacion);
+        $this->modalClonar = !$this->modalClonar;
+    }
+
+    public function resetForm()
+    {
+        $this->form->reset();
+        $this->form->resetValidation();
+        $this->initialFormData();
+    }
+
+    public function initialFormData(): void
+    {
+        $this->form->is_edit = false;
         $this->form->fecha_inicio = now()->toDateString();
-        $this->form->vacantes = 0;
         $this->form->fecha_fin = now()->addDay()->toDateString();
         $this->form->capacitacion_item = $this->items->mapWithKeys(function (Item $item) {
             return [

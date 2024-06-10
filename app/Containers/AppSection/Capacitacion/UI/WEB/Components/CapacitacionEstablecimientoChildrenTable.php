@@ -6,10 +6,10 @@ use App\Containers\AppSection\Capacitacion\Models\Capacitacion;
 use App\Containers\AppSection\Establecimiento\Models\Establecimiento;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
+use Filament\Notifications\Notification;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\BulkAction;
 use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
@@ -50,6 +50,11 @@ class CapacitacionEstablecimientoChildrenTable extends Component implements HasF
                     ->requiresConfirmation()
                     ->action(function (Capacitacion $record) {
                         $record->establecimientos()->updateExistingPivot($this->establecimiento->id, ['estado' => config('appSection-capacitacion.estado_establecimiento.HABILITADO.nombre')]);
+                        Notification::make()
+                            ->title('Habilitado Correctamente.')
+                            ->success()
+                            ->seconds(2)
+                            ->send();
                     })
             ])->bulkActions([
                     BulkActionGroup::make([
@@ -61,6 +66,11 @@ class CapacitacionEstablecimientoChildrenTable extends Component implements HasF
                                 foreach ($collection as $value) {
                                     $value->establecimientos()->updateExistingPivot($this->establecimiento->id, ['estado' => config('appSection-capacitacion.estado_establecimiento.HABILITADO.nombre')]);
                                 }
+                                Notification::make()
+                                    ->title('Capacitaciones habilitadas correctamente.')
+                                    ->success()
+                                    ->seconds(2)
+                                    ->send();
                             })
                             ->requiresConfirmation()
                             ->deselectRecordsAfterCompletion()

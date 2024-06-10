@@ -21,6 +21,12 @@ class CapacitacionTable extends Component implements HasForms, HasTable
     use InteractsWithTable;
     use InteractsWithForms;
 
+    public bool $customActions;
+    public function mount($customActions = false)
+    {
+        $this->customActions = $customActions;
+    }
+
     public function table(Table $table): Table
     {
         return $table
@@ -32,7 +38,33 @@ class CapacitacionTable extends Component implements HasForms, HasTable
             ->filters([
                 //...
             ])
-            ->actions([
+            ->actions(
+                $this->actions()
+            )
+            ->bulkActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make()->databaseTransaction(),
+                ]),
+            ]);
+    }
+
+
+    private function actions(): array
+    {
+        $array = [];
+        if ($this->customActions) {
+            $array = [
+                Action::make('select')
+                    ->label('Seleccionar')
+                    ->icon('heroicon-o-eye')
+                    ->color('info')
+                    ->action(
+                        fn(Capacitacion $record) =>
+                        $this->dispatch('capacitacion-table-selected', capacitacion: $record['id'])
+                    )
+            ];
+        } else {
+            $array = [
                 ActionGroup::make([
                     Action::make('edit')
                         ->label('Editar')
@@ -40,14 +72,10 @@ class CapacitacionTable extends Component implements HasForms, HasTable
                         ->color('warning')
                         ->url(fn(Capacitacion $record): string => route('capacitaciones.edit', $record)),
                     DeleteAction::make()->databaseTransaction(),
-
                 ])->color('info')
-            ])
-            ->bulkActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make()->databaseTransaction(),
-                ]),
-            ]);
+            ];
+        }
+        return $array;
     }
 
     public function render()

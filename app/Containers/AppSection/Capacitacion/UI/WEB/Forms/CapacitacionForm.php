@@ -14,6 +14,7 @@ use Livewire\Form;
 class CapacitacionForm extends Form
 {
     public ?Capacitacion $capacitacion;
+    public bool $is_edit = false;
 
     #[Validate]
     public $codigo;
@@ -48,7 +49,7 @@ class CapacitacionForm extends Form
     #[Validate]
     public $is_libre;
     #[Validate]
-    public $vacantes;
+    public $vacantes = 0;
 
     #[Validate]
     public $capacitacion_item = [];
@@ -233,7 +234,7 @@ class CapacitacionForm extends Form
             ],
         ];
         // Condición para agregar la regla unique
-        if (isset($this->capacitacion)) {
+        if ($this->is_edit) {
             $rules['codigo'][] = Rule::unique('capacitacions')->ignore($this->capacitacion);
         } else {
             $rules['codigo'][] = Rule::unique('capacitacions');
