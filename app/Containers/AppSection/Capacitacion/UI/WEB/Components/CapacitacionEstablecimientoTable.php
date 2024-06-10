@@ -2,22 +2,18 @@
 
 namespace App\Containers\AppSection\Capacitacion\UI\WEB\Components;
 
-use App\Containers\AppSection\Capacitacion\Models\Capacitacion;
 use App\Containers\AppSection\Establecimiento\Models\Establecimiento;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
+use Filament\Support\Enums\MaxWidth;
 use Filament\Tables\Actions\Action;
-use Filament\Tables\Actions\ActionGroup;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteAction;
-use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
+use Filament\Tables\Filters\QueryBuilder;
+use Filament\Tables\Filters\QueryBuilder\Constraints\DateConstraint;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\View\View;
 use Livewire\Component;
 
 class CapacitacionEstablecimientoTable extends Component implements HasForms, HasTable
@@ -25,33 +21,48 @@ class CapacitacionEstablecimientoTable extends Component implements HasForms, Ha
     use InteractsWithTable;
     use InteractsWithForms;
 
-    public Establecimiento $establecimiento;
+    public array $establecimiento_ids;
 
     public function mount()
     {
-        $this->establecimiento = auth()->user()->establecimiento;
+        $this->establecimiento_ids = auth()->user()->establecimiento->childrenAndSelf()->pluck('id')->toArray();
     }
 
     public function table(Table $table): Table
     {
         return $table
-            ->relationship(fn(): BelongsToMany => $this->establecimiento->capacitaciones()
-                ->wherePivot('estado', config('appSection-capacitacion.estado_establecimiento.APROBADO.nombre')))
-            ->inverseRelationship('establecimientos')
+            ->query(Establecimiento::query()->whereHas('capacitacions', function ($query) {
+                $query->whereIn('establecimiento_id', $this->establecimiento_ids)
+                    ->where('capacitacion_establecimiento.estado', 'APROBADO');
+            })->withCount([
+                        'capacitacions' => function ($query) {
+                            $query->whereIn('establecimiento_id', $this->establecimiento_ids)
+                                ->where('capacitacion_establecimiento.estado', 'APROBADO');
+                        }
+                    ]))
             ->columns([
-                TextColumn::make('nombre'),
-                TextColumn::make('pivot.estado')->label('Estado'),
+                TextColumn::make('nombre')->searchable(),
+                TextColumn::make('capacitacions_count')->label('N° Capacitaciones'),
+            ])
+            ->filters([
+                QueryBuilder::make()->constraints([DateConstraint::make('fecha_inicio')->relationship('capacitacions', 'fecha_inicio')]),
             ])
             ->actions([
-                Action::make('habilitar')
-                    ->label('Habilitar')
-                    ->icon(config('appSection-capacitacion.estado_establecimiento.HABILITADO.filament_icon'))
-                    ->color('success')
-                    ->action(function (Capacitacion $record) {
-                        $record->establecimientos()->updateExistingPivot($this->establecimiento->id, ['estado' => config('appSection-capacitacion.estado_establecimiento.HABILITADO.nombre')]);
-                    })
-                    ->requiresConfirmation()
-                    ->modalHeading('Habilitar Capacitación'),
+                Action::make('detalle')
+                    ->label('Ver')
+                    ->modalHeading('Capacitaciones del establecimiento')
+                    ->modalContent(
+                        fn(Establecimiento $record): View => view(
+                            'appSection@capacitacion::partials.capacitacion-children-table',
+                            ['establecimiento' => $record],
+                        )
+                    )
+                    ->modalSubmitAction(false)
+                    ->modalCancelAction(false)
+                    ->modalWidth(MaxWidth::FiveExtraLarge),
+            ])
+            ->bulkActions([
+                // ...
             ]);
     }
 
@@ -63,4 +74,5 @@ class CapacitacionEstablecimientoTable extends Component implements HasForms, Ha
         </div>
         HTML;
     }
+
 }

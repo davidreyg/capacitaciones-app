@@ -8,6 +8,7 @@ use App\Ship\Parents\Models\Model as ParentModel;
 
 class Establecimiento extends ParentModel
 {
+    use \Staudenmeir\LaravelAdjacencyList\Eloquent\HasRecursiveRelationships;
     public $timestamps = false;
 
     protected $fillable = [
@@ -38,7 +39,7 @@ class Establecimiento extends ParentModel
         return $this->hasMany(User::class);
     }
 
-    public function capacitaciones()
+    public function capacitacions()
     {
         return $this->belongsToMany(Capacitacion::class)
             ->withPivot(['estado']);
