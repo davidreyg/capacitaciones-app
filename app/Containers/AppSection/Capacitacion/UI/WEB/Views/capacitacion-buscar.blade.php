@@ -1,31 +1,63 @@
 <div>
-    <x-mary-header title="Buscar Capacitaciones" subtitle="Lista de capacitaciones del establecimiento" size="text-xl"
-        separator>
-    </x-mary-header>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        @foreach ($this->capacitaciones as $capacitacion)
+        <x-mary-card :title="$capacitacion->nombre" separator class="hover:shadow-xl card-bordered">
+            <div class="grid grid-cols-1  gap-2">
+                <p class="flex text-xs space-x-5">
+                    <span>
+                        <span class="font-bold">Creditos:</span>
+                        <span class="ml-1 italic">
+                            {{$capacitacion->creditos}}
+                        </span>
+                    </span>
+                    <span>
+                        <span class="font-bold">N° Horas:</span> <span class="ml-1 italic">
+                            {{$capacitacion->numero_horas}}
+                        </span>
+                    </span>
+                </p>
+                <p class="text-xs">
+                    <span class="font-bold"> Modalidad:</span>
+                    <span class="ml-1 italic">
+                        {{$capacitacion->modalidad->nombre}}
+                    </span>
+                </p>
+                <div class="grid grid-cols-2 mt-1">
+                    <p class="text-xs">
+                        <span class="font-bold"> Vacantes:</span>
+                        <span class="ml-1 italic">
+                            {{$capacitacion->is_libre ? 'Libre' : $capacitacion->vacantes}}
+                        </span>
+                    </p>
+                    <p class="text-xs">
+                        <span class="font-bold"> Costo:</span>
+                        <span class="ml-1 italic">
+                            S/. 90.00
+                        </span>
+                    </p>
+                </div>
 
-        <x-mary-card title="Nice things" shadow>
-            I am using slots here.
+                <br>
+                <p class="text-sm">
+                    Del:
+                    <span class="">
+                        {{$capacitacion->fecha_inicio_format}}
+                    </span> al:
+                    <span class="">
+                        {{$capacitacion->fecha_fin_format}}
+                    </span>
+                </p>
+                <div class="mt-5 justify-self-end">
+                    <x-button label="Inscribir" class="btn-warning" />
+                </div>
+            </div>
+
 
             <x-slot:menu>
-                <x-mary-button icon="o-share" class="btn-circle btn-sm" />
-                <x-mary-icon name="o-heart" class="cursor-pointer" />
+                <x-mary-badge value="Libre" @class(['badge-warning','hidden'=>!$capacitacion->is_libre]) />
             </x-slot:menu>
-            <x-slot:actions>
-                <x-mary-button label="Ok" class="btn-primary" />
-            </x-slot:actions>
         </x-mary-card>
-        <x-mary-card title="Nice things" shadow>
-            I am using slots here.
-            <x-slot:menu>
-                <x-mary-button icon="o-share" class="btn-circle btn-sm" />
-                <x-mary-icon name="o-heart" class="cursor-pointer" />
-            </x-slot:menu>
-            <x-slot:actions>
-                <x-mary-button label="Ok" class="btn-primary" />
-            </x-slot:actions>
-        </x-mary-card>
+        @endforeach
     </div>
-    {{-- @livewire('capacitacion-capacitacion-establecimiento-table') --}}
 </div>

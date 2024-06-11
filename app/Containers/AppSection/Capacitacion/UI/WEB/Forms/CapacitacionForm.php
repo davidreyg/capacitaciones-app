@@ -50,6 +50,8 @@ class CapacitacionForm extends Form
     public $is_libre;
     #[Validate]
     public $vacantes = 0;
+    #[Validate]
+    public $estado;
 
     #[Validate]
     public $capacitacion_item = [];
@@ -78,6 +80,7 @@ class CapacitacionForm extends Form
         $this->problema = $capacitacion->problema;
         $this->is_libre = $capacitacion->is_libre;
         $this->vacantes = $capacitacion->vacantes;
+        $this->estado = $capacitacion->estado;
         $this->capacitacion_item = $capacitacion->items->mapWithKeys(function (Item $item) {
             return [
                 $item->id => [
@@ -203,6 +206,9 @@ class CapacitacionForm extends Form
                 Rule::requiredIf(!$this->is_libre),
                 'integer',
             ],
+            'estado' => [
+                Rule::requiredIf($this->is_edit),
+            ],
             'capacitacion_item' => [
                 'required',
                 'array',
@@ -253,6 +259,8 @@ class CapacitacionForm extends Form
 
     public function store()
     {
+        // SIEMPRE EL ESTADO SERA C cuando se crea
+        $this->estado = config("appSection-capacitacion.estado.C.slug");
         return \DB::transaction(function () {
             $validated = $this->validate();
             $capacitacion = Capacitacion::create($validated);

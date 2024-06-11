@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "72648b4a7e7e0ae4659b1c5f76f091e7",
+    "content-hash": "8d5b519b9d7c779ca3cf55e9d7f4ed8c",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -223,50 +223,6 @@
                 }
             ],
             "time": "2024-05-29T17:21:31+00:00"
-        },
-        {
-            "name": "apiato/documentation-generator-container",
-            "version": "v3.0.5",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/apiato/documentation-generator-container.git",
-                "reference": "c22d6d4a6b4f598b4e68432175cfad479b48af64"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/apiato/documentation-generator-container/zipball/c22d6d4a6b4f598b4e68432175cfad479b48af64",
-                "reference": "c22d6d4a6b4f598b4e68432175cfad479b48af64",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^8.1"
-            },
-            "require-dev": {
-                "apiato/core": "^v8.1.0"
-            },
-            "type": "apiato-container",
-            "extra": {
-                "apiato": {
-                    "container": {
-                        "name": "Documentation"
-                    }
-                },
-                "laravel": {
-                    "providers": [
-                        "App\\Containers\\Vendor\\Documentation\\Providers\\DocumentGeneratorServiceProvider"
-                    ]
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "An Apiato container which can creates a documentation from API annotations in your source code.",
-            "support": {
-                "issues": "https://github.com/apiato/documentation-generator-container/issues",
-                "source": "https://github.com/apiato/documentation-generator-container/tree/v3.0.5"
-            },
-            "time": "2023-12-17T12:09:05+00:00"
         },
         {
             "name": "blade-ui-kit/blade-heroicons",
@@ -2611,6 +2567,83 @@
                 "source": "https://github.com/vinkla/hashids/tree/5.0.2"
             },
             "time": "2023-02-23T15:00:54+00:00"
+        },
+        {
+            "name": "jenssegers/date",
+            "version": "v4.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jenssegers/date.git",
+                "reference": "506f86096e0b512f9ece6ad0ccae62b03c125771"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jenssegers/date/zipball/506f86096e0b512f9ece6ad0ccae62b03c125771",
+                "reference": "506f86096e0b512f9ece6ad0ccae62b03c125771",
+                "shasum": ""
+            },
+            "require": {
+                "nesbot/carbon": "^2.16"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7.5",
+                "satooshi/php-coveralls": "^2.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.1-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Jenssegers\\Date\\DateServiceProvider"
+                    ],
+                    "aliases": {
+                        "Date": "Jenssegers\\Date\\Date"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Jenssegers\\Date\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jens Segers",
+                    "homepage": "https://jenssegers.com"
+                }
+            ],
+            "description": "A date library to help you work with dates in different languages",
+            "homepage": "https://github.com/jenssegers/date",
+            "keywords": [
+                "carbon",
+                "date",
+                "datetime",
+                "i18n",
+                "laravel",
+                "time",
+                "translation"
+            ],
+            "support": {
+                "issues": "https://github.com/jenssegers/date/issues",
+                "source": "https://github.com/jenssegers/date/tree/master"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/jenssegers",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/jenssegers/date",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2020-04-28T06:35:54+00:00"
         },
         {
             "name": "jfcherng/php-color-output",

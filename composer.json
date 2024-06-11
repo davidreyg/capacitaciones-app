@@ -45,6 +45,7 @@
         "filament/filament": "^3.2",
         "filament/tables": "^3.2",
         "guzzlehttp/guzzle": "^7.2",
+        "jenssegers/date": "^4.0",
         "joserick/laravel-livewire-discover": "^0.3.2",
         "laravel/framework": "^10.0",
         "laravel/tinker": "^2.8",

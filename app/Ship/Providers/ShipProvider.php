@@ -5,6 +5,8 @@ namespace App\Ship\Providers;
 use App\Ship\Parents\Providers\MainServiceProvider as ParentMainServiceProvider;
 use App\Ship\Providers\Filament\AdminPanelProvider;
 use Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider;
+use Carbon\Carbon;
+use Jenssegers\Date\Date;
 use Filament\Support\Facades\FilamentView;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Config;
@@ -31,6 +33,8 @@ class ShipProvider extends ParentMainServiceProvider
     {
         parent::boot();
         FilamentView::spa(true);
+        Carbon::setLocale(config('app.locale'));
+        Date::setLocale(config('app.locale'));
     }
 
     /**

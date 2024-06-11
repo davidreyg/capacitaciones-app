@@ -24,17 +24,16 @@
             </label>
 
             {{-- Brand --}}
-            <div>Establecimiento: {{auth()->user()->establecimiento->nombre}}</div>
+            <span>{{auth()->user()->establecimiento->nombre}}</span>
         </x-slot:brand>
 
         {{-- Right side actions --}}
         <x-slot:actions>
-            {{--
-            <x-mary-theme-toggle class="btn btn-circle btn-ghost" /> --}}
+
+            <x-mary-theme-toggle class="btn btn-circle btn-ghost" />
             <x-mary-dropdown>
                 <x-slot:trigger>
                     <div>
-                        {{auth()->user()->name}}
                         <x-mary-button icon="o-bell" class="btn-circle btn-outline" />
                     </div>
                 </x-slot:trigger>
@@ -75,7 +74,8 @@
 
 
             {{-- Activates the menu item when a route matches the `link` property --}}
-            @livewire('ship-sidebar')
+            {{-- @livewire('ship-sidebar') --}}
+            <livewire:ship-sidebar lazy />
         </x-slot:sidebar>
 
         {{-- The `$slot` goes here --}}

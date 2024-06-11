@@ -21,6 +21,7 @@ return new class () extends Migration {
             $table->tinyText('problema');
             $table->boolean('is_libre');
             $table->integer('vacantes')->unsigned();
+            $table->char('estado', 1);
             // RELACIONES
             $table->foreignId('tipo_capacitacion_id')->constrained();
             $table->foreignId('eje_tematico_id')->constrained();

@@ -20,7 +20,7 @@ class Sidebar extends Component
         return view('ship::partials.sidebar');
     }
 
-    private function buildTree(array &$elements, $parentId = null)
+    private function buildTree(array $elements, $parentId = null)
     {
         $branch = [];
 

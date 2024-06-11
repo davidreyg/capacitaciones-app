@@ -61,7 +61,7 @@ trait CapacitacionComputedAttributesTrait
     #[Computed]
     public function establecimientos()
     {
-        return Establecimiento::get();
+        return \DB::table('establecimientos')->select('id', 'nombre')->get();
     }
 
     public function addCosto()
