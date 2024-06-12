@@ -1,10 +1,10 @@
 services:
-  db:
+  db_capacitaciones:
     image: mariadb
-    container_name: capdb
+    container_name: db_capacitaciones
     restart: always
     volumes:
-      - db:/var/lib/mysql
+      - db_capacitaciones:/var/lib/mysql
       # If you want to persist data on the host, comment the line above this one...
       # and uncomment the line under this one.
       #- ./docker-compose/db/data:/var/lib/mysql:rw,delegated
@@ -13,10 +13,10 @@ services:
       MYSQL_PASSWORD: ${DB_PASSWORD}
       MYSQL_DATABASE: ${DB_DATABASE}
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-    ports:
-      - "33006:3306"
-    networks:
-      - daregu
+    # ports:
+    #   - "33007:3306"
+    # networks:
+    #   - daregu
 
   frankenphp:
     build:
@@ -32,11 +32,12 @@ services:
       - 8000:80
     volumes:
       - ./:/app
-    networks:
-      - daregu
+    # networks:
+    #   - daregu
 volumes:
-  db:
+  db_capacitaciones:
 
 networks:
-  daregu:
-    driver: bridge
+  default:
+    external: true
+    name: proxygratis
